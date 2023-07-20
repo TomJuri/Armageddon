@@ -33,6 +33,7 @@ dependencies {
     modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
 
     embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    embed("org.json:json:20230227")
 }
 
 blossom {
@@ -55,7 +56,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("mixins.examplemod.json")
+        mixinConfig("mixins.gemdigger.json")
     }
 }
 
@@ -67,7 +68,7 @@ tasks {
                         "TweakOrder" to "0",
                         "ForceLoadAsMod" to true,
                         "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker",
-                        "MixinConfigs" to "mixins.examplemod.json"
+                        "MixinConfigs" to "mixins.gemdigger.json"
                 )
         )
         dependsOn(shadowJar)
@@ -79,7 +80,8 @@ tasks {
     }
 
     shadowJar {
-        relocate("kotlin", "de.tomjuri.examplemod.relocate.kotlin")
+        relocate("kotlin", "de.tomjuri.gemdigger.relocate.kotlin")
+        relocate("org.json", "de.tomjuri.gemdigger.relocate.org.json")
         configurations = listOf(embed)
     }
 

@@ -1,8 +1,7 @@
-package de.tomjuri.examplemod
+package de.tomjuri.gemdigger
 
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main
-import de.tomjuri.examplemod.mixin.MinecraftInvoker
 import net.minecraft.client.Minecraft
 import net.minecraft.util.ChatComponentText
 

@@ -1,10 +1,10 @@
-package de.tomjuri.examplemod
+package de.tomjuri.gemdigger
 
 import cc.polyfrost.oneconfig.utils.commands.CommandManager
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 
-@Mod(modid = "examplemod", name = "Example Mod", version = "%%VERSION%%")
+@Mod(modid = "gemdigger", name = "GemDigger", version = "%%VERSION%%")
 class ExampleMod {
 
     companion object {
