@@ -32,6 +32,7 @@ dependencies {
 
     modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
 
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     embed("org.json:json:20230227")
 }

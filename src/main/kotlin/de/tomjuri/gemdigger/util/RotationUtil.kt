@@ -7,18 +7,17 @@ object RotationUtil {
 
     var done = true;
 
-    fun ease(targetYaw: Float, targetPitch: Float, durationMillis: Long) {
+    fun ease(targetYaw: Float, targetPitch: Float, durationMillis: Long, smart: Boolean) {
         if(!done) return
         done = false
         Thread {
-            val player = Minecraft.getMinecraft().thePlayer
             val startTime = System.currentTimeMillis()
             val startYaw = player.rotationYaw
             val startPitch = player.rotationPitch
             while (System.currentTimeMillis() - startTime < durationMillis) {
                 val currentTime = System.currentTimeMillis() - startTime
                 val progress = currentTime.toFloat() / durationMillis
-                val currentYaw: Float = interpolateYaw(startYaw, targetYaw, progress)
+                val currentYaw: Float = if(smart) interpolateYaw(startYaw, targetYaw, progress) else interpolate(startYaw, targetYaw, progress)
                 val currentPitch: Float = interpolate(startPitch, targetPitch, progress)
                 player.rotationYaw = currentYaw
                 player.rotationPitch = currentPitch
