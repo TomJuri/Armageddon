@@ -1,8 +1,11 @@
 package de.tomjuri.gemdigger
 
 import de.tomjuri.gemdigger.util.*
+import net.minecraft.util.Vec3
+import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
+import java.awt.Color
 
 class Macro {
 
@@ -16,14 +19,12 @@ class Macro {
         if (!running) return
         when (state) {
             State.DELAY -> {
-                if(TimerUtil.isDone() && RotationUtil.done) {
+                if(TimerUtil.isDone()) {
                     state = nextState
                 }
             }
 
             State.SWITCH_TO_ROD -> {
-                Logger.info("Current: $current")
-                GemDigger.routeManager.current = current
                 player.inventory.currentItem = GemDigger.config.rodSlot
                 TimerUtil.startTimer(100)
                 nextState = State.SUMMON_DILLO
@@ -47,19 +48,27 @@ class Macro {
             State.MOUNT_DILLO -> {
                 KeyBindUtil.rightClick()
                 TimerUtil.startTimer(100)
+                nextState = State.NORMALIZE_PITCH
+                state = State.DELAY
+            }
+            
+            State.NORMALIZE_PITCH -> {
+                RotationUtil.ease(player.rotationYaw, 0f, 200, true)
+                TimerUtil.startTimer(200)
                 nextState = State.MINE
                 state = State.DELAY
             }
 
             State.MINE -> {
-                RotationUtil.ease(player.rotationYaw, -55.5f, 500, true)
+                RotationUtil.ease(player.rotationYaw + 360, player.rotationPitch, 900, false)
+                TimerUtil.startTimer(700)
                 nextState = State.MINE_2
                 state = State.DELAY
             }
 
             State.MINE_2 -> {
-                RotationUtil.ease(player.rotationYaw + 360, -45f, 900, false)
                 player.jump()
+                TimerUtil.startTimer(200)
                 nextState = State.SWITCH_TO_ROD_2
                 state = State.DELAY
             }
@@ -87,29 +96,29 @@ class Macro {
 
             State.LOOK_AT_BLOCK -> {
                 val rotation = AngleUtil.getLookAtAngles(GemDigger.routeManager.route[current + 1])
-                RotationUtil.ease(rotation.first, rotation.second, 900, true)
-                TimerUtil.startTimer(900)
+                RotationUtil.ease(rotation.first, rotation.second, 300, true)
+                TimerUtil.startTimer(300)
                 nextState = State.TELEPORT_SNEAK
                 state = State.DELAY
             }
 
             State.TELEPORT_SNEAK -> {
                 KeyBindUtil.setKey(mc.gameSettings.keyBindSneak.keyCode, true)
-                TimerUtil.startTimer(500)
+                TimerUtil.startTimer(100)
                 nextState = State.TELEPORT
                 state = State.DELAY
             }
 
             State.TELEPORT -> {
                 KeyBindUtil.rightClick()
-                TimerUtil.startTimer(500)
+                TimerUtil.startTimer(150)
                 nextState = State.TELEPORT_UNSNEAK
                 state = State.DELAY
             }
 
             State.TELEPORT_UNSNEAK -> {
                 KeyBindUtil.setKey(mc.gameSettings.keyBindSneak.keyCode, false)
-                TimerUtil.startTimer(500)
+                TimerUtil.startTimer(100)
                 nextState = State.SWITCH_TO_ROD
                 state = State.DELAY
                 current++
@@ -117,11 +126,18 @@ class Macro {
         }
     }
 
+    @SubscribeEvent
+    fun onRenderWorldLast(event: RenderWorldLastEvent) {
+        if(!running) return
+        val next = GemDigger.routeManager.route[current + 1]
+        RenderUtil.drawLine(event, Vec3(player.posX, player.posY + player.eyeHeight, player.posZ), Vec3(next.x + 0.5, next.y + 0.5, next.z + 0.5), 0.5f, Color.green)
+    }
+
     fun toggle() {
         running = !running
         if(running) {
             Logger.info("Starting macro.")
-            current = 0
+            current = 1
             state = State.SWITCH_TO_ROD
         } else {
             Logger.info("Stopping macro.")
@@ -134,6 +150,7 @@ class Macro {
         SUMMON_DILLO,
         SWITCH_TO_DRILL,
         MOUNT_DILLO,
+        NORMALIZE_PITCH,
         MINE,
         MINE_2,
         SWITCH_TO_ROD_2,

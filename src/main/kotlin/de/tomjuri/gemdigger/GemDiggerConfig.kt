@@ -12,10 +12,6 @@ import cc.polyfrost.oneconfig.libs.universal.UKeyboard
 class GemDiggerConfig : Config(Mod("gemdigger", ModType.UTIL_QOL), "gemdigger.json") {
     @KeyBind(name = "Toggle macro")
     val toggleMacro = OneKeyBind(UKeyboard.KEY_C)
-    @KeyBind(name = "Next waypoint")
-    val nextWaypoint = OneKeyBind(UKeyboard.KEY_RIGHT)
-    @KeyBind(name = "Previous waypoint")
-    val prevWaypoint = OneKeyBind(UKeyboard.KEY_LEFT)
     @Text(name = "Route")
     val route = ""
     @Slider(name = "Drill slot", min = 0f, max = 8f)
@@ -27,7 +23,5 @@ class GemDiggerConfig : Config(Mod("gemdigger", ModType.UTIL_QOL), "gemdigger.js
     init {
         initialize()
         registerKeyBind(toggleMacro) { GemDigger.macro.toggle() }
-        registerKeyBind(nextWaypoint) { GemDigger.routeManager.current++ }
-        registerKeyBind(prevWaypoint) { GemDigger.routeManager.current-- }
     }
 }

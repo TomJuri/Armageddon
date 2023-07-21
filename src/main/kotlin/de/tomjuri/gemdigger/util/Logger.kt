@@ -4,12 +4,12 @@ import net.minecraft.util.ChatComponentText
 
 object Logger {
     fun info(message: Any) {
-        player.addChatMessage(ChatComponentText("a${message.toString()}"))
+        send("a$message")
     }
     fun error(message: Any) {
-        player.addChatMessage(ChatComponentText("c$message"))
+        send("c$message")
     }
     private fun send(message: String) {
-        player.addChatMessage(ChatComponentText("§cGem§eDigger §8» §"))
+        player.addChatMessage(ChatComponentText("§cGem§eDigger §8» §$message"))
     }
 }
