@@ -1,61 +1,67 @@
 package de.tomjuri.gemdigger.util
 
-import net.minecraft.client.Minecraft
-import kotlin.math.abs
+import net.minecraft.util.MathHelper
+import kotlin.math.pow
 
+// Inspired by skyskipped
 object RotationUtil {
 
+    private var startRotation = Rotation(0f, 0f)
+    private var endRotation = Rotation(0f, 0f)
+    private var startTime = 0L
+    private var endTime = 0L
     var done = true;
 
-    fun ease(targetYaw: Float, targetPitch: Float, durationMillis: Long, smart: Boolean) {
-        if(!done) return
+    fun ease(rotation: Rotation, durationMillis: Long) {
+        if (!done) return
         done = false
-        Thread {
-            val startTime = System.currentTimeMillis()
-            val startYaw = player.rotationYaw
-            val startPitch = player.rotationPitch
-            while (System.currentTimeMillis() - startTime < durationMillis) {
-                val currentTime = System.currentTimeMillis() - startTime
-                val progress = currentTime.toFloat() / durationMillis
-                val currentYaw: Float = if(smart) interpolateYaw(startYaw, targetYaw, progress) else interpolate(startYaw, targetYaw, progress)
-                val currentPitch: Float = interpolate(startPitch, targetPitch, progress)
-                player.rotationYaw = currentYaw
-                player.rotationPitch = currentPitch
-                Thread.sleep(16)
-            }
-            player.rotationYaw = targetYaw
-            player.rotationPitch = targetPitch
-            done = true
-        }.start()
+        startRotation = Rotation(player.rotationYaw, player.rotationPitch)
+        val neededChange = getNeededChange(startRotation, rotation)
+        endRotation = Rotation(startRotation.yaw + neededChange.yaw, startRotation.pitch + neededChange.pitch)
+        startTime = System.currentTimeMillis()
+        endTime = startTime + durationMillis
     }
 
-    private fun interpolate(start: Float, end: Float, progress: Float): Float {
-        return start + progress * (end - start)
+    fun ease360(rotation: Rotation, durationMillis: Long) {
+        if (!done) return
+        done = false
+        val currentRotation = Rotation(player.rotationYaw, player.rotationPitch)
+        val endRotationYaw = currentRotation.yaw + 360.0f
+        startRotation = currentRotation
+        endRotation = Rotation(endRotationYaw, rotation.pitch)
+        startTime = System.currentTimeMillis()
+        endTime = startTime + durationMillis
     }
 
-    private fun interpolateYaw(startYaw: Float, targetYaw: Float, progress: Float): Float {
-        var yaw = normalizeAngle(startYaw)
-        var target = normalizeAngle(targetYaw)
-        val diff = target - yaw
-        if (abs(diff) > 180) {
-            if (diff > 0) {
-                yaw += 360f
-            } else {
-                target += 360f
-            }
+
+    fun onRenderWorldLast() {
+        if (done) return
+        if (System.currentTimeMillis() <= endTime) {
+            mc.thePlayer.rotationYaw = interpolate(startRotation.yaw, endRotation.yaw)
+            mc.thePlayer.rotationPitch = interpolate(startRotation.pitch, endRotation.pitch)
+            return
         }
-        return normalizeAngle(interpolate(yaw, target, progress))
+        mc.thePlayer.rotationYaw = endRotation.yaw
+        mc.thePlayer.rotationPitch = endRotation.pitch
+        done = true
     }
 
-    private fun normalizeAngle(ang: Float): Float {
-        var angle = ang
-        angle %= 360f
-        if (angle >= 180) {
-            angle -= 360f
-        }
-        if (angle < -180) {
-            angle += 360f
-        }
-        return angle
+    private fun interpolate(start: Float, end: Float): Float {
+        val spentMillis = (System.currentTimeMillis() - startTime).toFloat()
+        val relativeProgress = spentMillis / (endTime - startTime).toFloat()
+        return (end - start) * easeOutCubic(relativeProgress.toDouble()) + start
     }
+
+    private fun easeOutCubic(number: Double): Float {
+        return (1.0 - (1.0 - number).pow(3.0)).toFloat()
+    }
+
+    private fun getNeededChange(startRot: Rotation, endRot: Rotation): Rotation {
+        var yawChange = MathHelper.wrapAngleTo180_float(endRot.yaw) - MathHelper.wrapAngleTo180_float(startRot.yaw)
+        if (yawChange <= -180.0f) yawChange += 360.0f
+        else if (yawChange > 180.0f) yawChange += -360.0f
+        return Rotation(yawChange, endRot.pitch - startRot.pitch)
+    }
+
+    data class Rotation(var yaw: Float, var pitch: Float)
 }

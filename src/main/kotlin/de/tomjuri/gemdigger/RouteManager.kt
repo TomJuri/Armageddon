@@ -22,7 +22,7 @@ class RouteManager {
 
     @SubscribeEvent
     fun onRenderWorldLast(event: RenderWorldLastEvent) {
-        if (route.isEmpty()) return
+        if (route.isEmpty() || !GemDigger.config.showWaypoints) return
         route.forEach {
             if (world.getBlockState(it).block == Blocks.cobblestone)
                 RenderUtil.drawBlockBox(it, Color.GREEN)
