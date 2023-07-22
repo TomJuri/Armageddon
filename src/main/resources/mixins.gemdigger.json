@@ -2,7 +2,11 @@
   "compatibilityLevel": "JAVA_8",
   "package": "de.tomjuri.gemdigger.mixin",
   "client": [
-    "MinecraftInvoker"
+    "MinecraftInvoker",
+    "MixinSoundManager"
   ],
-  "verbose": true
+  "verbose": true,
+  "mixins": [
+    "MixinNetworkManager"
+  ]
 }

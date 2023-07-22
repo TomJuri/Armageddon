@@ -1,6 +1,6 @@
 package de.tomjuri.gemdigger.util
 
-object TimerUtil {
+class Timer {
 
     private var endTime: Long = System.currentTimeMillis()
 
