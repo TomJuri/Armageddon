@@ -1,4 +1,4 @@
-package de.tomjuri.gemdigger.config
+package de.tomjuri.armageddon.config
 
 import cc.polyfrost.oneconfig.config.Config
 import cc.polyfrost.oneconfig.config.annotations.KeyBind
@@ -9,9 +9,9 @@ import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard
-import de.tomjuri.gemdigger.GemDigger
+import de.tomjuri.armageddon.Armageddon
 
-class GemDiggerConfig : Config(Mod("gemdigger", ModType.UTIL_QOL), "gemdigger.json") {
+class ArmageddonConfig : Config(Mod("gemdigger", ModType.UTIL_QOL), "gemdigger.json") {
 
     @KeyBind(name = "Toggle macro")
     val toggleMacro = OneKeyBind(UKeyboard.KEY_C)
@@ -38,6 +38,6 @@ class GemDiggerConfig : Config(Mod("gemdigger", ModType.UTIL_QOL), "gemdigger.js
 
     init {
         initialize()
-        registerKeyBind(toggleMacro) { GemDigger.macro.toggle() }
+        registerKeyBind(toggleMacro) { Armageddon.macro.toggle() }
     }
 }

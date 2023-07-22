@@ -1,6 +1,6 @@
-package de.tomjuri.gemdigger.mixin;
+package de.tomjuri.armageddon.mixin;
 
-import de.tomjuri.gemdigger.event.ReceivePacketEvent;
+import de.tomjuri.armageddon.event.ReceivePacketEvent;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;

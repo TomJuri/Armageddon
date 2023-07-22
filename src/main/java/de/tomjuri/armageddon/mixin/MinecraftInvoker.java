@@ -1,4 +1,4 @@
-package de.tomjuri.gemdigger.mixin;
+package de.tomjuri.armageddon.mixin;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;

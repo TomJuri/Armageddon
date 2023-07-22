@@ -1,8 +1,7 @@
-package de.tomjuri.gemdigger.util
+package de.tomjuri.armageddon.util
 
 import net.minecraft.util.BlockPos
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 
 

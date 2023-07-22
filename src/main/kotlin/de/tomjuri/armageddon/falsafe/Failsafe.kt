@@ -1,8 +1,8 @@
-package de.tomjuri.gemdigger.falsafe
+package de.tomjuri.armageddon.falsafe
 
-import de.tomjuri.gemdigger.GemDigger
-import de.tomjuri.gemdigger.event.ReceivePacketEvent
-import de.tomjuri.gemdigger.util.*
+import de.tomjuri.armageddon.Armageddon
+import de.tomjuri.armageddon.event.ReceivePacketEvent
+import de.tomjuri.armageddon.util.*
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
@@ -16,7 +16,7 @@ class Failsafe {
     private fun emergency() {
         pingAlertPlaying = true
         numPings = 15
-        GemDigger.macro.stop()
+        Armageddon.macro.stop()
     }
 
     @SubscribeEvent

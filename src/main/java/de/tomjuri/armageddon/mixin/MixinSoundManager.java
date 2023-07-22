@@ -1,6 +1,6 @@
-package de.tomjuri.gemdigger.mixin;
+package de.tomjuri.armageddon.mixin;
 
-import de.tomjuri.gemdigger.GemDigger;
+import de.tomjuri.armageddon.Armageddon;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundManager;
@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinSoundManager {
     @Inject(method = "getNormalizedVolume", at = @At("RETURN"), cancellable = true)
     private void getNormalizedVolume(ISound sound, SoundPoolEntry soundPoolEntry, SoundCategory category, CallbackInfoReturnable<Float> ci) {
-        if(GemDigger.failsafe.getPingAlertPlaying() && category == SoundCategory.PLAYERS) return;
-        if(GemDigger.macro.isRunning() && GemDigger.config.getMuteGameSounds()) {
+        if(Armageddon.failsafe.getPingAlertPlaying() && category == SoundCategory.PLAYERS) return;
+        if(Armageddon.macro.isRunning() && Armageddon.config.getMuteGameSounds()) {
             ci.setReturnValue(0.0f);
         }
     }

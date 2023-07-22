@@ -1,4 +1,4 @@
-package de.tomjuri.gemdigger.util
+package de.tomjuri.armageddon.util
 
 import net.minecraft.util.ChatComponentText
 
@@ -10,6 +10,6 @@ object Logger {
         send("c$message")
     }
     private fun send(message: String) {
-        player.addChatMessage(ChatComponentText("§cGem§eDigger §8» §$message"))
+        player.addChatMessage(ChatComponentText("§eArmageddon §8» §$message"))
     }
 }

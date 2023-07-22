@@ -57,7 +57,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("mixins.gemdigger.json")
+        mixinConfig("mixins.armageddon.json")
     }
 }
 
@@ -69,7 +69,7 @@ tasks {
                         "TweakOrder" to "0",
                         "ForceLoadAsMod" to true,
                         "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker",
-                        "MixinConfigs" to "mixins.gemdigger.json"
+                        "MixinConfigs" to "mixins.armageddon.json"
                 )
         )
         dependsOn(shadowJar)
@@ -81,8 +81,8 @@ tasks {
     }
 
     shadowJar {
-        relocate("kotlin", "de.tomjuri.gemdigger.relocate.kotlin")
-        relocate("org.json", "de.tomjuri.gemdigger.relocate.org.json")
+        relocate("kotlin", "de.tomjuri.armageddon.relocate.kotlin")
+        relocate("org.json", "de.tomjuri.armageddon.relocate.org.json")
         configurations = listOf(embed)
     }
 

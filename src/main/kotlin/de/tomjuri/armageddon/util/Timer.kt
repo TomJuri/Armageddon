@@ -1,4 +1,4 @@
-package de.tomjuri.gemdigger.util
+package de.tomjuri.armageddon.util
 
 class Timer {
 

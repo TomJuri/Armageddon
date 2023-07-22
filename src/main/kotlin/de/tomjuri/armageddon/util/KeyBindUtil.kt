@@ -1,7 +1,6 @@
-package de.tomjuri.gemdigger.util
+package de.tomjuri.armageddon.util
 
-import de.tomjuri.gemdigger.mixin.MinecraftInvoker
-import net.minecraft.client.Minecraft
+import de.tomjuri.armageddon.mixin.MinecraftInvoker
 import net.minecraft.client.settings.KeyBinding
 
 object KeyBindUtil {

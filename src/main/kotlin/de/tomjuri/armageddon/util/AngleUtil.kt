@@ -1,4 +1,4 @@
-package de.tomjuri.gemdigger.util
+package de.tomjuri.armageddon.util
 
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper

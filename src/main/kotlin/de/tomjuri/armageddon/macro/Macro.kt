@@ -1,7 +1,7 @@
-package de.tomjuri.gemdigger.macro
+package de.tomjuri.armageddon.macro
 
-import de.tomjuri.gemdigger.GemDigger
-import de.tomjuri.gemdigger.util.*
+import de.tomjuri.armageddon.Armageddon
+import de.tomjuri.armageddon.util.*
 import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -20,7 +20,7 @@ class Macro {
     fun onTick(event: ClientTickEvent) {
         if (!running) return
 
-        val standinOn = GemDigger.routeManager.findStandingOn()
+        val standinOn = Armageddon.routeManager.findStandingOn()
         Logger.info(standinOn)
         if (current < 0 && standinOn == -1) {
             Logger.error("Not standing on a block in the route! " +
@@ -35,7 +35,7 @@ class Macro {
 
         when (state) {
             State.SWITCH_TO_ROD -> {
-                player.inventory.currentItem = GemDigger.config.rodSlot - 1
+                player.inventory.currentItem = Armageddon.config.rodSlot - 1
                 timer.startTimer(100)
                 nextState = State.SUMMON_DILLO
                 state = State.DELAY
@@ -49,7 +49,7 @@ class Macro {
             }
 
             State.SWITCH_TO_DRILL -> {
-                player.inventory.currentItem = GemDigger.config.drillSlot - 1
+                player.inventory.currentItem = Armageddon.config.drillSlot - 1
                 timer.startTimer(100)
                 nextState = State.NORMALIZE_PITCH
                 state = State.DELAY
@@ -84,7 +84,7 @@ class Macro {
             }
 
             State.SWITCH_TO_ROD_2 -> {
-                player.inventory.currentItem = GemDigger.config.rodSlot - 1
+                player.inventory.currentItem = Armageddon.config.rodSlot - 1
                 timer.startTimer(100)
                 nextState = State.DESUMMON_DILLO
                 state = State.DELAY
@@ -98,14 +98,14 @@ class Macro {
             }
 
             State.SWITCH_TO_DRILL_2 -> {
-                player.inventory.currentItem = GemDigger.config.drillSlot - 1
+                player.inventory.currentItem = Armageddon.config.drillSlot - 1
                 // sleep until landed is hardcoded in the delay state
                 nextState = State.SWITCH_TO_AOTV
                 state = State.DELAY
             }
 
             State.SWITCH_TO_AOTV -> {
-                player.inventory.currentItem = GemDigger.config.aotvSlot - 1
+                player.inventory.currentItem = Armageddon.config.aotvSlot - 1
                 timer.startTimer(100)
                 nextState = State.SNEAK
                 state = State.DELAY
@@ -119,7 +119,7 @@ class Macro {
             }
 
             State.LOOK_AT_BLOCK -> {
-                val block = GemDigger.routeManager.route[current + 1]
+                val block = Armageddon.routeManager.route[current + 1]
                 val rotation = AngleUtil.getRotationToLookAt(block)
                 RotationUtil.ease(rotation, 250)
                 timer.startTimer(250)
@@ -139,8 +139,8 @@ class Macro {
                 timer.startTimer(100)
                 nextState = State.SWITCH_TO_ROD
                 state = State.DELAY
-                if(player.posX != GemDigger.routeManager.route[current + 1].x + 0.5 ||
-                   player.posZ != GemDigger.routeManager.route[current + 1].z + 0.5) {
+                if(player.posX != Armageddon.routeManager.route[current + 1].x + 0.5 ||
+                   player.posZ != Armageddon.routeManager.route[current + 1].z + 0.5) {
                     Logger.error("Teleport failed, did not arrive at location!")
                     stop()
                     return
@@ -160,8 +160,8 @@ class Macro {
     @SubscribeEvent
     fun onRenderWorldLast(event: RenderWorldLastEvent) {
         RotationUtil.onRenderWorldLast()
-        if (!running || !GemDigger.config.showWaypoints) return
-        val next = GemDigger.routeManager.route[current + 1]
+        if (!running || !Armageddon.config.showWaypoints) return
+        val next = Armageddon.routeManager.route[current + 1]
         RenderUtil.drawLine(event, Vec3(player.posX, player.posY + player.getEyeHeight(), player.posZ), Vec3(next.x + 0.5, next.y - 0.5, next.z + 0.5), 0.5f, Color.green)
     }
 

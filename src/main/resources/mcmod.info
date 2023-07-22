@@ -1,8 +1,8 @@
 [
   {
-    "modid": "gemdigger",
-    "name": "GemDigger",
-    "description": "GemDigger Mod!",
+    "modid": "armageddon",
+    "name": "Armageddon",
+    "description": "Armadillo macro!",
     "version": "${version}",
     "mcversion": "1.8.9",
     "url": "",

@@ -1,14 +1,14 @@
-package de.tomjuri.gemdigger.command
+package de.tomjuri.armageddon.command
 
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main
-import de.tomjuri.gemdigger.GemDigger
+import de.tomjuri.armageddon.Armageddon
 
 @Command(value = "reloadroute")
-class ResetRouteCommand {
+class ReloadRouteCommand {
 
     @Main
     fun main() {
-        GemDigger.routeManager.reloadRoute()
+        Armageddon.routeManager.reloadRoute()
     }
 }

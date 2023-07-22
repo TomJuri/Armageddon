@@ -1,7 +1,7 @@
-package de.tomjuri.gemdigger.macro
+package de.tomjuri.armageddon.macro
 
-import de.tomjuri.gemdigger.GemDigger
-import de.tomjuri.gemdigger.util.*
+import de.tomjuri.armageddon.Armageddon
+import de.tomjuri.armageddon.util.*
 import net.minecraft.init.Blocks
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -9,10 +9,10 @@ import java.awt.Color
 
 class RouteManager {
 
-    var route = RouteParser.parseRoute(GemDigger.config.route)
+    var route = RouteParser.parseRoute(Armageddon.config.route)
 
     fun reloadRoute() {
-        route = RouteParser.parseRoute(GemDigger.config.route)
+        route = RouteParser.parseRoute(Armageddon.config.route)
         if (route.isEmpty()) {
             Logger.error("Unable to parse route!")
             return
@@ -30,7 +30,7 @@ class RouteManager {
 
     @SubscribeEvent
     fun onRenderWorldLast(event: RenderWorldLastEvent) {
-        if (route.isEmpty() || !GemDigger.config.showWaypoints) return
+        if (route.isEmpty() || !Armageddon.config.showWaypoints) return
         route.forEach {
             if (world.getBlockState(it).block == Blocks.cobblestone)
                 RenderUtil.drawBlockBox(event, it, Color.GREEN)

@@ -1,4 +1,4 @@
-package de.tomjuri.gemdigger.event
+package de.tomjuri.armageddon.event
 
 import net.minecraft.network.Packet
 import net.minecraftforge.fml.common.eventhandler.Event
