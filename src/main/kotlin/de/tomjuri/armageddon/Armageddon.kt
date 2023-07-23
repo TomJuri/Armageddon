@@ -1,7 +1,7 @@
 package de.tomjuri.armageddon
 
 import cc.polyfrost.oneconfig.utils.commands.CommandManager
-import de.tomjuri.armageddon.command.ReloadRouteCommand
+import de.tomjuri.armageddon.command.ArmageddonCommand
 import de.tomjuri.armageddon.config.ArmageddonConfig
 import de.tomjuri.armageddon.falsafe.Failsafe
 import de.tomjuri.armageddon.macro.Macro
@@ -29,7 +29,7 @@ class Armageddon {
         routeManager = RouteManager()
         macro = Macro()
         failsafe = Failsafe()
-        CommandManager.register(ReloadRouteCommand())
+        CommandManager.register(ArmageddonCommand())
         MinecraftForge.EVENT_BUS.register(routeManager)
         MinecraftForge.EVENT_BUS.register(macro)
         MinecraftForge.EVENT_BUS.register(failsafe)

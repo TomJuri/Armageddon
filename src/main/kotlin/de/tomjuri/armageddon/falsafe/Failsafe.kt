@@ -1,7 +1,7 @@
 package de.tomjuri.armageddon.falsafe
 
 import de.tomjuri.armageddon.Armageddon
-import de.tomjuri.armageddon.event.ReceivePacketEvent
+import de.tomjuri.armageddon.event.PacketEvent
 import de.tomjuri.armageddon.util.*
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -34,9 +34,13 @@ class Failsafe {
         }
     }
 
+    var logi = false
+
     @SubscribeEvent
-    fun onReceivePacket(event: ReceivePacketEvent) {
+    fun onReceivePacket(event: PacketEvent) {
         if(mc.thePlayer == null) return
+        if(!logi) return
+        Logger.info("Packet: ${event.packet}")
         if (event.packet is S08PacketPlayerPosLook) {
           //  emergency()
         }

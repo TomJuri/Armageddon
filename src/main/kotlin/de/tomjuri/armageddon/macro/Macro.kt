@@ -2,11 +2,10 @@ package de.tomjuri.armageddon.macro
 
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.util.*
-import net.minecraft.util.Vec3
+import net.minecraft.entity.monster.EntityZombie
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
-import java.awt.Color
 
 class Macro {
 
@@ -20,18 +19,15 @@ class Macro {
     fun onTick(event: ClientTickEvent) {
         if (!running) return
 
-        val standinOn = Armageddon.routeManager.findStandingOn()
-        Logger.info(standinOn)
-        if (current < 0 && standinOn == -1) {
-            Logger.error("Not standing on a block in the route! " +
-                         "You need to AOTV in the middle of the block.")
+        val standingOn = Armageddon.routeManager.findStandingOn()
+        if(current < 0) {
+            current = standingOn
+        }
+        if (current < 0 && standingOn == -1) {
+            Logger.error("Not standing on a block in the route! You need to AOTV in the middle of the block.")
             stop()
             return
-        } else {
-            current = standinOn
         }
-
-        Logger.info(state)
 
         when (state) {
             State.SWITCH_TO_ROD -> {
@@ -64,24 +60,33 @@ class Macro {
 
             State.MOUNT_DILLO -> {
                 KeyBindUtil.rightClick()
-                timer.startTimer(100)
+                timer.startTimer(150)
                 nextState = State.MINE
                 state = State.DELAY
             }
 
             State.MINE -> {
-                RotationUtil.ease360(RotationUtil.Rotation(-1f, player.rotationPitch), 900)
-                timer.startTimer(700)
+                RotationUtil.ease360(RotationUtil.Rotation(-1f, player.rotationPitch), 420)
                 nextState = State.MINE_JUMP
                 state = State.DELAY
             }
 
             State.MINE_JUMP -> {
-                player.jump()
+                Armageddon.failsafe.logi = true
+                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, true)
                 timer.startTimer(200)
+                nextState = State.MINE_JUMP_2
+                state = State.DELAY
+            }
+
+            State.MINE_JUMP_2 -> {
+                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, false)
+                Armageddon.failsafe.logi = false
+                timer.startTimer(250)
                 nextState = State.SWITCH_TO_ROD_2
                 state = State.DELAY
             }
+
 
             State.SWITCH_TO_ROD_2 -> {
                 player.inventory.currentItem = Armageddon.config.rodSlot - 1
@@ -129,7 +134,7 @@ class Macro {
 
             State.TELEPORT -> {
                 KeyBindUtil.rightClick()
-                timer.startTimer(2000)
+                timer.startTimer(250)
                 nextState = State.UNSNEAK
                 state = State.DELAY
             }
@@ -160,9 +165,6 @@ class Macro {
     @SubscribeEvent
     fun onRenderWorldLast(event: RenderWorldLastEvent) {
         RotationUtil.onRenderWorldLast()
-        if (!running || !Armageddon.config.showWaypoints) return
-        val next = Armageddon.routeManager.route[current + 1]
-        RenderUtil.drawLine(event, Vec3(player.posX, player.posY + player.getEyeHeight(), player.posZ), Vec3(next.x + 0.5, next.y - 0.5, next.z + 0.5), 0.5f, Color.green)
     }
 
     fun toggle() {
@@ -193,6 +195,7 @@ class Macro {
         MOUNT_DILLO,
         MINE,
         MINE_JUMP,
+        MINE_JUMP_2,
         SWITCH_TO_ROD_2,
         DESUMMON_DILLO,
         SWITCH_TO_DRILL_2,

@@ -11,28 +11,28 @@ import cc.polyfrost.oneconfig.config.data.ModType
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard
 import de.tomjuri.armageddon.Armageddon
 
-class ArmageddonConfig : Config(Mod("gemdigger", ModType.UTIL_QOL), "gemdigger.json") {
+class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon.json") {
 
     @KeyBind(name = "Toggle macro")
-    val toggleMacro = OneKeyBind(UKeyboard.KEY_C)
+    var toggleMacro = OneKeyBind(UKeyboard.KEY_C)
 
     @Text(name = "Route")
-    val route = ""
+    var route = ""
 
     @Slider(name = "Drill slot", min = 1f, max = 8f, step = 1)
-    val drillSlot = 1
+    var drillSlot = 1
 
     @Slider(name = "Rod slot", min = 1f, max = 8f, step = 1)
-    val rodSlot = 2
+    var rodSlot = 2
 
     @Slider(name = "AOTV slot", min = 1f, max = 8f, step = 1)
-    val aotvSlot = 3
+    var aotvSlot = 3
 
     @Switch(name = "Show waypoints")
-    val showWaypoints = true
+    var showWaypoints = true
 
     @Switch(name = "Mute game sounds")
-    val muteGameSounds = false
+    var muteGameSounds = false
 
 
 

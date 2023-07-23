@@ -1,6 +1,6 @@
 package de.tomjuri.armageddon.mixin;
 
-import de.tomjuri.armageddon.event.ReceivePacketEvent;
+import de.tomjuri.armageddon.event.PacketEvent;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -14,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinNetworkManager {
     @Inject(method = "channelRead0", at = @At("HEAD"))
     private void read(ChannelHandlerContext context, Packet<?> packet, CallbackInfo callback) {
-        if(packet.getClass().getSimpleName().startsWith("S")) {
-            MinecraftForge.EVENT_BUS.post(new ReceivePacketEvent(packet));
-        }
+        MinecraftForge.EVENT_BUS.post(new PacketEvent(packet));
     }
 }
