@@ -10,7 +10,7 @@ object RotationUtil {
     private var endRotation = Rotation(0f, 0f)
     private var startTime = 0L
     private var endTime = 0L
-    var done = true;
+    var done = true
 
     fun ease(rotation: Rotation, durationMillis: Long) {
         if (!done) return

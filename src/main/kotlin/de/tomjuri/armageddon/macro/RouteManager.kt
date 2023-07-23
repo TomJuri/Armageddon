@@ -3,7 +3,6 @@ package de.tomjuri.armageddon.macro
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.util.*
 import net.minecraft.init.Blocks
-import net.minecraft.util.BlockPos
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.RenderWorldLastEvent

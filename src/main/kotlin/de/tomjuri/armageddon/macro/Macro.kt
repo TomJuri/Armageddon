@@ -2,7 +2,6 @@ package de.tomjuri.armageddon.macro
 
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.util.*
-import net.minecraft.entity.monster.EntityZombie
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent

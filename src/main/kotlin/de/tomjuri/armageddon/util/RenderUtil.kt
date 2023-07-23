@@ -59,8 +59,8 @@ object RenderUtil {
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
         GlStateManager.color(1f, 1f, 1f, 1f)
         bufferBuilder.begin(3, DefaultVertexFormats.POSITION_COLOR)
-        bufferBuilder.pos(from.xCoord, from.yCoord, from.zCoord).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f).endVertex();
-        bufferBuilder.pos(to.xCoord, to.yCoord, to.zCoord).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f).endVertex();
+        bufferBuilder.pos(from.xCoord, from.yCoord, from.zCoord).color(color.red / 255f, color.green / 255f, color.blue / 255f, color.alpha / 255f).endVertex()
+        bufferBuilder.pos(to.xCoord, to.yCoord, to.zCoord).color(color.red / 255f, color.green / 255f, color.blue / 255f, color.alpha / 255f).endVertex()
         tessellator.draw()
         GlStateManager.translate(realX, realY, realZ)
         GlStateManager.disableBlend()
