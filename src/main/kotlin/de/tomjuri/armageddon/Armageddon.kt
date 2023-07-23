@@ -13,9 +13,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 @Mod(modid = "armageddon", name = "Armageddon", version = "%%VERSION%%")
 class Armageddon {
 
-    private val message = "If you managed to crack this mod, message me on Discord(tomjuri) for a prize"
-    private val message2 = "But you're probably not going to be able to read this, gotta love String Encryption"
-
     companion object {
         lateinit var config: ArmageddonConfig
         lateinit var routeManager: RouteManager

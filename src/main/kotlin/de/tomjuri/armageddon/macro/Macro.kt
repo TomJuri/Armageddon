@@ -59,33 +59,28 @@ class Macro {
 
             State.MOUNT_DILLO -> {
                 KeyBindUtil.rightClick()
-                timer.startTimer(150)
+                nextState = State.JUMP
+                state = State.DELAY
+            }
+
+            State.JUMP -> {
+                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, true)
+                timer.startTimer(100)
+                nextState = State.JUMP_2
+                state = State.DELAY
+            }
+
+            State.JUMP_2 -> {
+                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, false)
                 nextState = State.MINE
                 state = State.DELAY
             }
 
             State.MINE -> {
                 RotationUtil.ease360(RotationUtil.Rotation(-1f, player.rotationPitch), 420)
-                nextState = State.MINE_JUMP
-                state = State.DELAY
-            }
-
-            State.MINE_JUMP -> {
-                Armageddon.failsafe.logi = true
-                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, true)
-                timer.startTimer(200)
-                nextState = State.MINE_JUMP_2
-                state = State.DELAY
-            }
-
-            State.MINE_JUMP_2 -> {
-                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, false)
-                Armageddon.failsafe.logi = false
-                timer.startTimer(250)
                 nextState = State.SWITCH_TO_ROD_2
                 state = State.DELAY
             }
-
 
             State.SWITCH_TO_ROD_2 -> {
                 player.inventory.currentItem = Armageddon.config.rodSlot - 1
@@ -155,6 +150,7 @@ class Macro {
             State.DELAY -> {
                 if (nextState == State.SWITCH_TO_AOTV && !player.onGround)
                     return
+                if(nextState == State.JUMP && !player.isRiding) return
                 if (timer.isDone())
                     state = nextState
             }
@@ -192,9 +188,9 @@ class Macro {
         SWITCH_TO_DRILL,
         NORMALIZE_PITCH,
         MOUNT_DILLO,
+        JUMP,
+        JUMP_2,
         MINE,
-        MINE_JUMP,
-        MINE_JUMP_2,
         SWITCH_TO_ROD_2,
         DESUMMON_DILLO,
         SWITCH_TO_DRILL_2,
