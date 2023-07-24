@@ -22,6 +22,7 @@ class Armageddon {
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
+        Auth.auth()
         config = ArmageddonConfig()
         routeManager = RouteManager()
         macro = Macro()

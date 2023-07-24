@@ -22,11 +22,11 @@ object RotationUtil {
         endTime = startTime + durationMillis
     }
 
-    fun ease360(rotation: Rotation, durationMillis: Long) {
+    fun easeCertain(rotation: Rotation, durationMillis: Long) {
         if (!done) return
         done = false
         val currentRotation = Rotation(player.rotationYaw, player.rotationPitch)
-        val endRotationYaw = currentRotation.yaw + 360.0f
+        val endRotationYaw = currentRotation.yaw + rotation.yaw
         startRotation = currentRotation
         endRotation = Rotation(endRotationYaw, rotation.pitch)
         startTime = System.currentTimeMillis()

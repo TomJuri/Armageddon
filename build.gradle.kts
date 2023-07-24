@@ -35,6 +35,7 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     embed("org.json:json:20230227")
+    embed("com.squareup.okhttp3:okhttp:3.14.9")
 }
 
 blossom {
@@ -83,6 +84,8 @@ tasks {
     shadowJar {
         relocate("kotlin", "de.tomjuri.armageddon.relocate.kotlin")
         relocate("org.json", "de.tomjuri.armageddon.relocate.org.json")
+        relocate("okhttp3", "de.tomjuri.armageddon.relocate.okhttp3")
+        relocate("okio", "de.tomjuri.armageddon.relocate.okio")
         configurations = listOf(embed)
     }
 

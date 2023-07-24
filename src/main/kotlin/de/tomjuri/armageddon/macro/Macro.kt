@@ -19,7 +19,7 @@ class Macro {
         if (!running) return
 
         val standingOn = Armageddon.routeManager.findStandingOn()
-        if(current < 0) {
+        if (current < 0) {
             current = standingOn
         }
         if (current < 0 && standingOn == -1) {
@@ -45,7 +45,7 @@ class Macro {
 
             State.SWITCH_TO_DRILL -> {
                 player.inventory.currentItem = Armageddon.config.drillSlot - 1
-                timer.startTimer(100)
+                timer.startTimer(200)
                 nextState = State.NORMALIZE_PITCH
                 state = State.DELAY
             }
@@ -59,12 +59,23 @@ class Macro {
 
             State.MOUNT_DILLO -> {
                 KeyBindUtil.rightClick()
+                timer.startTimer(200)
+                nextState = State.MINE
+                state = State.DELAY
+            }
+
+            State.MINE -> {
+                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, true)
+                RotationUtil.easeCertain(
+                        RotationUtil.Rotation(
+                                Armageddon.config.swipeRange.toFloat(),
+                                player.rotationPitch),
+                        Armageddon.config.swipeTime.toLong())
                 nextState = State.JUMP
                 state = State.DELAY
             }
 
             State.JUMP -> {
-                KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, true)
                 timer.startTimer(100)
                 nextState = State.JUMP_2
                 state = State.DELAY
@@ -72,12 +83,7 @@ class Macro {
 
             State.JUMP_2 -> {
                 KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, false)
-                nextState = State.MINE
-                state = State.DELAY
-            }
-
-            State.MINE -> {
-                RotationUtil.ease360(RotationUtil.Rotation(-1f, player.rotationPitch), 420)
+                timer.startTimer(310)
                 nextState = State.SWITCH_TO_ROD_2
                 state = State.DELAY
             }
@@ -98,7 +104,6 @@ class Macro {
 
             State.SWITCH_TO_DRILL_2 -> {
                 player.inventory.currentItem = Armageddon.config.drillSlot - 1
-                // sleep until landed is hardcoded in the delay state
                 nextState = State.SWITCH_TO_AOTV
                 state = State.DELAY
             }
@@ -128,7 +133,7 @@ class Macro {
 
             State.TELEPORT -> {
                 KeyBindUtil.rightClick()
-                timer.startTimer(250)
+                timer.startTimer(2000)
                 nextState = State.UNSNEAK
                 state = State.DELAY
             }
@@ -138,19 +143,24 @@ class Macro {
                 timer.startTimer(100)
                 nextState = State.SWITCH_TO_ROD
                 state = State.DELAY
-                if(player.posX != Armageddon.routeManager.route[current + 1].x + 0.5 ||
-                   player.posZ != Armageddon.routeManager.route[current + 1].z + 0.5) {
-                    Logger.error("Teleport failed, did not arrive at location!")
-                    stop()
-                    return
-                }
                 current++
             }
 
             State.DELAY -> {
                 if (nextState == State.SWITCH_TO_AOTV && !player.onGround)
                     return
-                if(nextState == State.JUMP && !player.isRiding) return
+                if (nextState == State.UNSNEAK && timer.isDone()) {
+                    Logger.error("Teleport failed, did not arrive at location!")
+                    stop()
+                    return
+                }
+                if (nextState == State.UNSNEAK
+                        && player.posX == Armageddon.routeManager.route[current + 1].x + 0.5
+                        && player.posZ == Armageddon.routeManager.route[current + 1].z + 0.5) {
+                    state = nextState
+                    return
+                }
+                if (nextState == State.MINE && !player.isRiding) return
                 if (timer.isDone())
                     state = nextState
             }
@@ -188,9 +198,9 @@ class Macro {
         SWITCH_TO_DRILL,
         NORMALIZE_PITCH,
         MOUNT_DILLO,
+        MINE,
         JUMP,
         JUMP_2,
-        MINE,
         SWITCH_TO_ROD_2,
         DESUMMON_DILLO,
         SWITCH_TO_DRILL_2,

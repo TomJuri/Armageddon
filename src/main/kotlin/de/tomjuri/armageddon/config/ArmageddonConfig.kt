@@ -34,7 +34,11 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
     @Switch(name = "Mute game sounds")
     var muteGameSounds = false
 
+    @Slider(name = "Swipe range", min = 180f, max = 360f, step = 1)
+    var swipeRange = 320
 
+    @Slider(name = "Swipe time", min = 300f, max = 1000f, step = 1)
+    var swipeTime = 500
 
     init {
         initialize()
