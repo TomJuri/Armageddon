@@ -13,11 +13,12 @@ object CryptoUtil {
         val cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding")
         cipher.init(Cipher.ENCRYPT_MODE, publicKey)
         val encryptedData = cipher.doFinal(message)
-        return Base64.getEncoder().encodeToString(encryptedData)
+        return Base64.getEncoder().encodeToString(Base64.getEncoder().encodeToString(encryptedData).toByteArray())
     }
 
     fun rsaDecrypt(encryptedText: String, privateKey: RSAPrivateKey): String {
-        val encryptedData = Base64.getDecoder().decode(encryptedText)
+        println(encryptedText)
+        val encryptedData = Base64.getDecoder().decode(Base64.getDecoder().decode(encryptedText))
         val cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding")
         cipher.init(Cipher.DECRYPT_MODE, privateKey)
         val decryptedData = cipher.doFinal(encryptedData)

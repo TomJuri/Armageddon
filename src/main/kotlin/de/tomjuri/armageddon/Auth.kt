@@ -5,14 +5,18 @@ import de.tomjuri.armageddon.util.CryptoUtil
 import de.tomjuri.armageddon.util.mc
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.security.MessageDigest
+import java.security.Security
 import java.util.*
 
 object Auth {
     fun auth() {
+        Security.addProvider(BouncyCastleProvider())
         val realDate = "${getHWID()}|${System.currentTimeMillis()}|${mc.session.playerID}".toByteArray()
         val publicKey = CryptoUtil.getPublicKey("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtQF9Z1/UNv52OY+kpPOhRh4W5zBLZTD1o+zNGbYB9j7HZqWt09dcj+6fB2gYYHnBLHQpaJwFUT496r3pZLnYlMcQRFiw5u9VvGHc2UYfxnheE4AZF4FgzPIUnWM5hOCtEQ3DLkgtbjMdUNpV8vQr8I8cN15X+vOHv2egPH7d2ojPFLmmBywBcMo+2qar8iST3SWKJ+SY2DMDqWe739u4AWrCS7tqKxzaqDLrEOP6hHCrDH0bIWQ8EUvGoQlIU+/nj0l1iIS2zwBjeOvzpyo8HkF884HRgtf0l3evmAlNcy9g9hLeR4RP0sJXf8wMcQIZFWb54VAVh8Zhc9rv2ks6XwIDAQAB")
         val date = List(10) {
+            println(it)
             if(it == 4) {
                 CryptoUtil.rsaEncrypt(realDate, publicKey)
             } else {
@@ -20,7 +24,7 @@ object Auth {
             }
         }
         val bigString = date.joinToString("-")
-        val url = "http://localhost:5000/Q6W2ecZlZ3InKEEriO7onlQ1i1vAVCC9ipOF4qwsfNIK1xg6Z80NZTgbXbOJ?DvigquT6UAztO5IdMb0iIex6skfcHrPs8lDeTCxLfzG98n0AdNWeIN2VX3Kd=$bigString"
+        val url = "http://168.119.36.188:5000/Q6W2ecZlZ3InKEEriO7onlQ1i1vAVCC9ipOF4qwsfNIK1xg6Z80NZTgbXbOJ?DvigquT6UAztO5IdMb0iIex6skfcHrPs8lDeTCxLfzG98n0AdNWeIN2VX3Kd=$bigString"
         val request: Request = Request.Builder()
                 .url(url)
                 .addHeader("User-Agent", "TOM-CLIENT-JAVA8-Shipping-g1vJHlyarpLgba7Fu3SoUm5dGkoDHeI5f8QIFur7")
