@@ -2,7 +2,9 @@ package de.tomjuri.armageddon.failsafe
 
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.event.PacketEvent
-import de.tomjuri.armageddon.util.*
+import de.tomjuri.armageddon.util.Timer
+import de.tomjuri.armageddon.util.player
+import de.tomjuri.armageddon.util.world
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
@@ -34,15 +36,18 @@ class Failsafe {
         }
     }
 
-    var logi = false
-
+    // rotation check
+    var canRotationCheckTrigger = true
     @SubscribeEvent
     fun onReceivePacket(event: PacketEvent) {
-        if(mc.thePlayer == null) return
-        if(!logi) return
-        Logger.info("Packet: ${event.packet}")
-        if (event.packet is S08PacketPlayerPosLook) {
-          //  emergency()
+        if (event.packet !is S08PacketPlayerPosLook) {
+            return
+        }
+        if(!canRotationCheckTrigger) {
+            return
+        }
+        if(event.packet.pitch - player.rotationPitch * -1 > Armageddon.config.rotationCheckThreshold || event.packet.yaw - player.rotationYaw * -1 > Armageddon.config.rotationCheckThreshold) {
+            emergency()
         }
     }
 }
