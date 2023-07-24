@@ -143,6 +143,10 @@ class Macro {
                 timer.startTimer(100)
                 nextState = State.SWITCH_TO_ROD
                 state = State.DELAY
+                if(current == Armageddon.routeManager.route.size - 1) {
+                    current = 0
+                    return
+                }
                 current++
             }
 
@@ -177,7 +181,7 @@ class Macro {
         else start()
     }
 
-    fun start() {
+    private fun start() {
         Logger.info("Starting macro.")
         running = true
         current = -999
