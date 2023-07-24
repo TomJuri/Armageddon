@@ -1,6 +1,8 @@
 package de.tomjuri.armageddon.util
 
+
 import java.security.KeyFactory
+import java.security.MessageDigest
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.security.spec.PKCS8EncodedKeySpec
@@ -8,7 +10,31 @@ import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import javax.crypto.Cipher
 
-object CryptoUtil {
+object AuthUtil {
+     fun getHWID(): String {
+        val toEncrypt = System.getenv("COMPUTERNAME") + System.getProperty("user.name") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_LEVEL")
+        val md = MessageDigest.getInstance("MD5")
+        md.update(toEncrypt.toByteArray())
+        val hexString = StringBuffer()
+        val byteData = md.digest()
+        for (aByteData in byteData) {
+            val hex = Integer.toHexString(0xff and aByteData.toInt())
+            if (hex.length == 1) hexString.append('0')
+            hexString.append(hex)
+        }
+        return hexString.toString()
+    }
+
+    fun generateRandomString(length: Int): String {
+        val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        val random = Random()
+        val sb = StringBuilder(length)
+        for (i in 0 until length) {
+            sb.append(characters[random.nextInt(characters.length)])
+        }
+        return sb.toString()
+    }
+
     fun rsaEncrypt(message: ByteArray, publicKey: RSAPublicKey): String {
         val cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding")
         cipher.init(Cipher.ENCRYPT_MODE, publicKey)
@@ -38,4 +64,5 @@ object CryptoUtil {
         val keyFactory = KeyFactory.getInstance("RSA")
         return keyFactory.generatePrivate(spec) as RSAPrivateKey
     }
+
 }
