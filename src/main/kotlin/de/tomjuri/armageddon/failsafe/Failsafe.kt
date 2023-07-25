@@ -100,12 +100,15 @@ class Failsafe {
     @SubscribeEvent
     fun onTick1(event: ClientTickEvent) {
         if (!Armageddon.macro.isRunning()) return
+        val radius = 20
         var bedrock = 0
         var oak = false
-        for (i in 0..9) {
-            for (j in 0..9) {
-                if (world.getBlockState(player.position.add(i, 1, j)).equals(Blocks.bedrock)) bedrock++
-                if (world.getBlockState(player.position.add(i, 1, j)).equals(Blocks.log)) oak = true
+        for (x in -radius..radius) {
+            for (y in -radius..radius) {
+                for (z in -radius..radius) {
+                    if (world.getBlockState(player.position.add(x, y, z)).equals(Blocks.bedrock)) bedrock++
+                    if (world.getBlockState(player.position.add(x, y, z)).equals(Blocks.log)) oak = true
+                }
             }
         }
         if(bedrock > 2 && oak)
