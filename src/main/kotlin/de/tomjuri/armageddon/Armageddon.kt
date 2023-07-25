@@ -3,7 +3,7 @@ package de.tomjuri.armageddon
 import cc.polyfrost.oneconfig.utils.commands.CommandManager
 import de.tomjuri.armageddon.command.ArmageddonCommand
 import de.tomjuri.armageddon.config.ArmageddonConfig
-import de.tomjuri.armageddon.failsafe.Failsafe
+import de.tomjuri.armageddon.feature.Failsafe
 import de.tomjuri.armageddon.macro.Macro
 import de.tomjuri.armageddon.macro.RouteManager
 import de.tomjuri.armageddon.util.AuthUtil

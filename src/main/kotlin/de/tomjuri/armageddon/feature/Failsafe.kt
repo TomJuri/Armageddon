@@ -1,4 +1,4 @@
-package de.tomjuri.armageddon.failsafe
+package de.tomjuri.armageddon.feature
 
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.event.PacketEvent
