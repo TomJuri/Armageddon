@@ -51,7 +51,6 @@ class Macro {
             }
 
             State.NORMALIZE_PITCH -> {
-                Armageddon.failsafe.canRotationCheckTrigger = false
                 RotationUtil.ease(RotationUtil.Rotation(player.rotationYaw, -3f), 100)
                 timer.startTimer(100)
                 nextState = State.MOUNT_DILLO
@@ -59,7 +58,6 @@ class Macro {
             }
 
             State.MOUNT_DILLO -> {
-                Armageddon.failsafe.canRotationCheckTrigger = true
                 KeyBindUtil.rightClick()
                 timer.startTimer(200)
                 nextState = State.MINE
@@ -68,7 +66,6 @@ class Macro {
 
             State.MINE -> {
                 KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, true)
-                Armageddon.failsafe.canRotationCheckTrigger = false
                 RotationUtil.easeCertain(
                         RotationUtil.Rotation(
                                 Armageddon.config.swipeRange.toFloat(),
@@ -92,7 +89,6 @@ class Macro {
             }
 
             State.SWITCH_TO_ROD_2 -> {
-                Armageddon.failsafe.canRotationCheckTrigger = true
                 player.inventory.currentItem = Armageddon.config.rodSlot - 1
                 timer.startTimer(100)
                 nextState = State.DESUMMON_DILLO
@@ -127,7 +123,6 @@ class Macro {
             }
 
             State.LOOK_AT_BLOCK -> {
-                Armageddon.failsafe.canRotationCheckTrigger = false
                 val block = Armageddon.routeManager.route[current + 1]
                 val rotation = AngleUtil.getRotationToLookAt(block)
                 RotationUtil.ease(rotation, 250)
@@ -137,6 +132,7 @@ class Macro {
             }
 
             State.TELEPORT -> {
+                Armageddon.failsafe.canRotationCheckTrigger = false
                 KeyBindUtil.rightClick()
                 timer.startTimer(2000)
                 nextState = State.UNSNEAK
