@@ -188,6 +188,7 @@ class Macro {
     }
 
     private fun start() {
+        if(running) return
         Logger.info("Starting macro.")
         running = true
         current = -999
@@ -196,6 +197,7 @@ class Macro {
     }
 
     fun stop() {
+        if(!running) return
         Logger.info("Stopping macro.")
         running = false
     }

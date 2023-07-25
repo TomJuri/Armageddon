@@ -6,7 +6,9 @@ import de.tomjuri.armageddon.util.Logger
 import de.tomjuri.armageddon.util.Timer
 import de.tomjuri.armageddon.util.player
 import de.tomjuri.armageddon.util.world
+import net.minecraft.init.Blocks
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
+import net.minecraft.util.BlockPos
 import net.minecraftforge.event.world.WorldEvent.Unload
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
@@ -39,28 +41,74 @@ class Failsafe {
         }
     }
 
-    // rotation check
     var canRotationCheckTrigger = true
+
     @SubscribeEvent
     fun onReceivePacket(event: PacketEvent) {
+        if(!Armageddon.macro.isRunning()) return
         if (event.packet !is S08PacketPlayerPosLook)
             return
-        if(!canRotationCheckTrigger)
+        if (!canRotationCheckTrigger)
             return
-        if(event.packet.pitch - player.rotationPitch * -1 > Armageddon.config.rotationCheckThreshold || event.packet.yaw - player.rotationYaw * -1 > Armageddon.config.rotationCheckThreshold)
+        if (event.packet.pitch - player.rotationPitch * -1 > Armageddon.config.rotationCheckThreshold || event.packet.yaw - player.rotationYaw * -1 > Armageddon.config.rotationCheckThreshold)
             emergency("You probably have been rotation checked!")
     }
 
-    // disconnect and switch server failsafe
     @SubscribeEvent
     fun onDisconnect(event: ClientDisconnectionFromServerEvent) {
+        if(!Armageddon.macro.isRunning()) return
         Armageddon.macro.stop()
     }
 
     @SubscribeEvent
     fun onUnloadWorld(event: Unload) {
-        if(Armageddon.macro.isRunning()) {
-            emergency("You probably have been kicked from the server!")
+        if (!Armageddon.macro.isRunning()) return
+        emergency("You probably have been kicked from the server!")
+    }
+
+    @SubscribeEvent
+    fun onTick0(event: ClientTickEvent) {
+        if (!Armageddon.macro.isRunning()) return
+        val loc = player.position
+        val top = world.getBlockState(BlockPos(loc.x, loc.y + 2, loc.z)).block
+        val bottom = world.getBlockState(BlockPos(loc.x, loc.y - 1, loc.z)).block
+        val leftBottom = world.getBlockState(BlockPos(loc.x - 1, loc.y, loc.z)).block
+        val leftTop = world.getBlockState(BlockPos(loc.x - 1, loc.y + 1, loc.z)).block
+        val rightBottom = world.getBlockState(BlockPos(loc.x + 1, loc.y, loc.z)).block
+        val rightTop = world.getBlockState(BlockPos(loc.x + 1, loc.y + 1, loc.z)).block
+        val frontBottom = world.getBlockState(BlockPos(loc.x, loc.y, loc.z - 1)).block
+        val frontTop = world.getBlockState(BlockPos(loc.x, loc.y + 1, loc.z - 1)).block
+        val backBottom = world.getBlockState(BlockPos(loc.x, loc.y, loc.z + 1)).block
+        val backTop = world.getBlockState(BlockPos(loc.x, loc.y + 1, loc.z + 1)).block
+
+        if (
+                top == Blocks.stone
+                && bottom == Blocks.stone
+                && leftBottom == Blocks.stone
+                && leftTop == Blocks.stone
+                && rightBottom == Blocks.stone
+                && rightTop == Blocks.stone
+                && frontBottom == Blocks.stone
+                && frontTop == Blocks.stone
+                && backBottom == Blocks.stone
+                && backTop == Blocks.stone
+        ) {
+            emergency("You probably have been hardstone box checked!")
         }
+    }
+
+    @SubscribeEvent
+    fun onTick1(event: ClientTickEvent) {
+        if (!Armageddon.macro.isRunning()) return
+        var bedrock = 0
+        var oak = false
+        for (i in 0..9) {
+            for (j in 0..9) {
+                if (world.getBlockState(player.position.add(i, 1, j)).equals(Blocks.bedrock)) bedrock++
+                if (world.getBlockState(player.position.add(i, 1, j)).equals(Blocks.log)) oak = true
+            }
+        }
+        if(bedrock > 2 && oak)
+            emergency("You probably have been bedrock box checked!")
     }
 }
