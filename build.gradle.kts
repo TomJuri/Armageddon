@@ -30,9 +30,10 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
-    if (System.getenv("GITHUB_ACTIONS") != "true")
+    if (System.getenv("GITHUB_ACTIONS")?.toBoolean() == false) {
         println("Not running in GitHub Actions adding DevAuth dependency")
         modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
+    }
 
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
