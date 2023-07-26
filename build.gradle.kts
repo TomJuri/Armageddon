@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version "1.9.0"
     id("cc.polyfrost.loom") version "0.10.0.5"
@@ -30,8 +33,7 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
-    if (System.getenv("GITHUB_ACTIONS")?.toBoolean() == false) {
-        println("Not running in GitHub Actions adding DevAuth dependency")
+    if (System.getenv("GITHUB_ACTIONS") == "false") {
         modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
     }
 
@@ -100,12 +102,13 @@ tasks {
             expand(mapOf("version" to version))
         }
     }
-}
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
+    withType<JavaCompile> {
+        targetCompatibility = "1.8"
+        sourceCompatibility = "1.8"
+    }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
-kotlin.jvmToolchain(8)
+    withType<KotlinCompile> {
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
+    }
+}
