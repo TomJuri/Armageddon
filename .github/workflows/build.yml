@@ -20,6 +20,10 @@ jobs:
     #      key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
     #      restore-keys: |
     #        ${{ runner.os }}-gradle-
+      - name: reeee
+        run: dir ~/.gradle/caches/modules-2/files-2.1
+      - name: delete gradle caches
+        run: rmdir /s /q ~/.gradle
       - name: Run build with Gradle Wrapper
         run: ./gradlew build
       - name: Copy artifact
