@@ -1,0 +1,136 @@
+{
+  "Settings": {
+    "Input": "input.jar",
+    "Output": "output-grunt.jar",
+    "Libraries": [],
+    "Exclusions": [
+      "cc",
+      "de/tomjuri/armageddon/relocate"
+    ],
+    "GenerateRemap": true,
+    "RemapOutput": "mappings.json",
+    "ParallelProcessing": false,
+    "CustomDictionary": ["f", "u", "c", "k", "y", "o", "u"],
+    "DictionaryStartIndex": 0,
+    "CorruptOutput": false,
+    "FileRemovePrefix": [],
+    "FileRemoveSuffix": []
+  },
+  "AntiDebug": {
+    "Enabled": false,
+    "SourceDebug": true,
+    "LineDebug": true,
+    "RenameSourceDebug": false,
+    "SourceNames": [
+      "114514.java",
+      "1919810.kt",
+      "69420.java",
+      "你妈死了.kt"
+    ]
+  },
+  "Shrinking": {
+    "Enabled": false,
+    "RemoveInnerClass": true,
+    "RemoveUnusedLabel": true,
+    "RemoveNOP": false,
+    "Exclusions": []
+  },
+  "KotlinOptimizer": {
+    "Enabled": true,
+    "RemoveMetadata": true,
+    "RemoveIntrinsics": true,
+    "IntrinsicsRemoval": [
+      "checkExpressionValueIsNotNull",
+      "checkNotNullExpressionValue",
+      "checkReturnedValueIsNotNull",
+      "checkFieldIsNotNull",
+      "checkParameterIsNotNull",
+      "checkNotNullParameter"
+    ],
+    "IntrinsicsExclusions": [],
+    "MetadataExclusions": []
+  },
+  "StringEncrypt": {
+    "Enabled": false,
+    "Intensity": 1,
+    "Exclusions": []
+  },
+  "NumberEncrypt": {
+    "Enabled": false,
+    "FloatingPoint": true,
+    "Intensity": 1,
+    "Exclusions": []
+  },
+  "ScrambleTransformer": {
+    "Enabled": false,
+    "Intensity": 1,
+    "RandomName": false,
+    "RedirectGetStatic": true,
+    "RedirectSetStatic": true,
+    "RedirectGetValue": true,
+    "RedirectSetField": true,
+    "GenerateOuterClass": false,
+    "ExcludedClasses": [],
+    "ExcludedFieldName": [],
+    "NativeDownCalls": true,
+    "NativeUpCalls": false
+  },
+  "NativeCandidate": {
+    "Enabled": false,
+    "NativeAnnotation": "Lnet/spartanb312/example/Native;",
+    "UpCallLimit": 0,
+    "Exclusions": []
+  },
+  "LocalVariableRename": {
+    "Enabled": true,
+    "Dictionary": "Custom",
+    "ThisReference": false
+  },
+  "MethodRename": {
+    "Enabled": true,
+    "Dictionary": "Custom",
+    "HeavyOverloads": false,
+    "RandomKeywordPrefix": false,
+    "Prefix": "",
+    "Exclusion": [],
+    "ExcludedName": []
+  },
+  "FieldRename": {
+    "Enabled": true,
+    "Dictionary": "Custom",
+    "RandomKeywordPrefix": false,
+    "Prefix": "",
+    "Exclusion": [],
+    "ExcludedName": []
+  },
+  "ClassRename": {
+    "Enabled": true,
+    "Dictionary": "Custom",
+    "Parent": "de/tomjuri/armageddon",
+    "Prefix": "",
+    "CorruptedName": false,
+    "CorruptedNameExclusions": [],
+    "ManifestReplace": [
+      "Main-Class"
+    ],
+    "PluginMainReplace": false,
+    "BungeeMainReplace": false,
+    "Exclusion": [],
+    "MixinSupport": true,
+    "MixinDictionary": "Custom",
+    "MixinPackage": "de/tomjuri/armageddon/mixin/",
+    "TargetMixinPackage": "de/tomjuri/armageddon/mixin/",
+    "MixinFile": "mixins.armageddon.json",
+    "RefmapFile": "Armageddon-refmap.json"
+  },
+  "ShuffleMembers": {
+    "Enabled": false,
+    "Methods": true,
+    "Fields": true,
+    "Annotations": true
+  },
+  "Watermark": {
+    "Enabled": false,
+    "Watermark Message": "PROTECTED BY GRUNT KLASS MASTER"
+  }
+}

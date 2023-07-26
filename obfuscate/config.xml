@@ -1,0 +1,18 @@
+<jnic>
+  <targets>
+    <target>WINDOWS_X86_64</target>
+    <target>MACOS_X86_64</target>
+    <target>LINUX_X86_64</target>
+  </targets>
+  <options>
+    <stringObf>true</stringObf>
+    <flowObf>true</flowObf>
+  </options>
+  <include>
+    <match className="de/tomjuri/armageddon/.*"/>
+  </include>
+  <exclude>
+    <match className="de/tomjuri/armageddon/relocate/.*"/>
+    <match className="de/tomjuri/armageddon/mixin/.*"/>
+  </exclude>
+</jnic>
