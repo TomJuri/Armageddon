@@ -3,8 +3,11 @@
   "package": "de.tomjuri.armageddon.mixin",
   "client": [
     "MinecraftInvoker",
-    "MixinSoundManager",
-    "MixinNetworkManager"
+    "MixinNetworkManager",
+    "MixinSoundManager"
   ],
-  "verbose": true
+  "verbose": true,
+  "mixins": [
+    "MixinFMLHandshakeMessage"
+  ]
 }
