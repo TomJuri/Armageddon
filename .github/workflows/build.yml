@@ -23,6 +23,8 @@ jobs:
           java -jar grunt.jar
       - name: Download zig
         run: |
+          pwd
+          cd obfuscate
           curl -L https://ziglang.org/builds/zig-windows-x86_64-0.11.0-dev.4252+6cee98eb3.zip -o zig.zip
           tar -xf zig.zip
       - name: Run jnic
