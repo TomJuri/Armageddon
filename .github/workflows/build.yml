@@ -28,7 +28,10 @@ jobs:
           curl -L https://ziglang.org/builds/zig-windows-x86_64-0.11.0-dev.4252+6cee98eb3.zip -o zig.zip
           tar -xf zig.zip
       - name: Run jnic
-        run: java -javaagent:jnic-loader.jar -jar jnic.jar output.jar output-jnic.jar config.xml
+        run: | 
+          pwd
+          cd obfuscate
+          java -javaagent:jnic-loader.jar -jar jnic.jar output.jar output-jnic.jar config.xml
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
