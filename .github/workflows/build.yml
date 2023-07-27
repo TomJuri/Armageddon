@@ -4,36 +4,20 @@ on:
   pull_request:
 jobs:
   build-gradle-project:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: 'zulu'
+          java-version: '17'
+      - name: Checkout project sources
+        uses: actions/checkout@v2
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-      - name: Execute Gradle build
+        uses: gradle/gradle-build-action@v2.4.0
+      - name: Run build with Gradle Wrapper
         run: ./gradlew build
-      - name: Copy artifact
-        run: cp build/libs/Armageddon-*.*.*.jar obfuscate/input.jar
-      - name: Obfuscate names
-        run: |
-          cd obfuscate
-          java -jar grunt.jar
-      - name: Download zig
-        run: |
-          pwd
-          cd obfuscate
-          curl -L https://ziglang.org/builds/zig-windows-x86_64-0.11.0-dev.4252+6cee98eb3.zip -o zig.zip
-          tar -xf zig.zip
-      - name: Run jnic
-        run: | 
-          pwd
-          cd obfuscate
-          java -javaagent:jnic-loader.jar -jar jnic.jar output.jar output-jnic.jar config.xml
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
-          name: examplemodartifact
-          path: obfuscate/output-jnic.jar
+          name: Armageddon
+          path: build/libs/Armageddon-*.*.*.jar
