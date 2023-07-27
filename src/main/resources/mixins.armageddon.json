@@ -4,10 +4,8 @@
   "client": [
     "MinecraftInvoker",
     "MixinNetworkManager",
-    "MixinSoundManager"
-  ],
-  "verbose": true,
-  "mixins": [
+    "MixinSoundManager",
     "MixinFMLHandshakeMessage"
-  ]
+  ],
+  "verbose": true
 }

@@ -43,7 +43,6 @@ object AuthUtil {
     }
 
     fun rsaDecrypt(encryptedText: String, privateKey: RSAPrivateKey): String {
-        println(encryptedText)
         val encryptedData = Base64.getDecoder().decode(Base64.getDecoder().decode(encryptedText))
         val cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding")
         cipher.init(Cipher.DECRYPT_MODE, privateKey)

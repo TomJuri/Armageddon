@@ -33,9 +33,7 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
-    if (System.getenv("GITHUB_ACTIONS") == "false") {
-        modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
-    }
+    modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
 
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
