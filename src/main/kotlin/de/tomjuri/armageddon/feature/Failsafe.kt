@@ -2,10 +2,7 @@ package de.tomjuri.armageddon.feature
 
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.event.PacketEvent
-import de.tomjuri.armageddon.util.Logger
-import de.tomjuri.armageddon.util.Timer
-import de.tomjuri.armageddon.util.player
-import de.tomjuri.armageddon.util.world
+import de.tomjuri.armageddon.util.*
 import net.minecraft.init.Blocks
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.BlockPos
@@ -43,6 +40,7 @@ class Failsafe {
 
     var canRotationCheckTrigger = true
 
+    @NoNative
     @SubscribeEvent
     fun onReceivePacket(event: PacketEvent) {
         if(!Armageddon.macro.isRunning()) return

@@ -11,6 +11,7 @@ import java.awt.Color
 import kotlin.math.sqrt
 
 
+@NoNative
 object RenderUtil {
 
     fun drawBlockBox(event: RenderWorldLastEvent, block: BlockPos, color: Color) {

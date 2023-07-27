@@ -39,7 +39,6 @@ dependencies {
     embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     embed("org.json:json:20230227")
     embed("com.squareup.okhttp3:okhttp:3.14.9")
-    embed("org.bouncycastle:bcprov-jdk15on:1.70")
 }
 
 blossom {
@@ -90,7 +89,6 @@ tasks {
         relocate("org.json", "de.tomjuri.armageddon.relocate.org.json")
         relocate("okhttp3", "de.tomjuri.armageddon.relocate.okhttp3")
         relocate("okio", "de.tomjuri.armageddon.relocate.okio")
-        relocate("org.bouncycastle", "de.tomjuri.armageddon.relocate.org.bouncycastle")
         configurations = listOf(embed)
     }
 
@@ -109,4 +107,9 @@ tasks {
     withType<KotlinCompile> {
         compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
     }
+}
+
+java {
+    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
 }

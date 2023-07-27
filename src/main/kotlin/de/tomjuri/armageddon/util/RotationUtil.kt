@@ -34,6 +34,7 @@ object RotationUtil {
     }
 
 
+    @NoNative
     fun onRenderWorldLast() {
         if (done) return
         if (System.currentTimeMillis() <= endTime) {
@@ -46,6 +47,7 @@ object RotationUtil {
         done = true
     }
 
+    @NoNative
     private fun interpolate(start: Float, end: Float): Float {
         val spentMillis = (System.currentTimeMillis() - startTime).toFloat()
         val relativeProgress = spentMillis / (endTime - startTime).toFloat()

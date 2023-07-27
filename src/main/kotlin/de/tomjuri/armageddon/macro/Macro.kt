@@ -58,6 +58,7 @@ class Macro {
             }
 
             State.MOUNT_DILLO -> {
+                Armageddon.failsafe.canRotationCheckTrigger = false
                 KeyBindUtil.rightClick()
                 timer.startTimer(200)
                 nextState = State.MINE
@@ -65,6 +66,7 @@ class Macro {
             }
 
             State.MINE -> {
+                Armageddon.failsafe.canRotationCheckTrigger = true
                 KeyBindUtil.setKey(mc.gameSettings.keyBindJump.keyCode, true)
                 RotationUtil.easeCertain(
                         RotationUtil.Rotation(
@@ -174,6 +176,7 @@ class Macro {
     }
 
     @SubscribeEvent
+    @NoNative
     fun onRenderWorldLast(event: RenderWorldLastEvent) {
         RotationUtil.onRenderWorldLast()
     }
