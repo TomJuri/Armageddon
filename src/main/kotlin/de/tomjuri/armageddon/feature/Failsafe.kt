@@ -20,7 +20,7 @@ class Failsafe {
     private var movement = ""
     var pingAlertPlaying = false
     private var numPings = 15
-    val messages = listOf("wtf", "wtf??", "lmao", "lmfao", "tf", "ok admins",
+    private val messages = listOf("wtf", "wtf??", "lmao", "lmfao", "tf", "ok admins",
             "?!?", "check?", "uhhhh", "nice", "oh wtf", "bruh that scared me", "bruh")
 
     fun emergency(message: String, movement: String) {
