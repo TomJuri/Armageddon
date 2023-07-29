@@ -3,6 +3,7 @@ package de.tomjuri.armageddon.macro
 import de.tomjuri.annotation.NoNative
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.util.*
+import net.minecraft.init.Blocks
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
@@ -147,7 +148,7 @@ class Macro {
                 timer.startTimer(100)
                 nextState = State.SWITCH_TO_ROD
                 state = State.DELAY
-                if(current == Armageddon.routeManager.route.size - 1) {
+                if (current == Armageddon.routeManager.route.size - 1) {
                     current = 0
                     return
                 }
@@ -170,6 +171,11 @@ class Macro {
                     return
                 }
                 if (nextState == State.MINE && !player.isRiding) return
+                if (nextState == State.TELEPORT
+                        && world.getBlockState(Armageddon.routeManager.route[current + 1]).block != Blocks.air) {
+                    Armageddon.failsafe.emergency("Next block is air, this might be a staff check!", failsafeMovementNoMovement)
+                    return
+                }
                 if (timer.isDone())
                     state = nextState
             }
@@ -188,7 +194,7 @@ class Macro {
     }
 
     private fun start() {
-        if(running) return
+        if (running) return
         Logger.info("Starting macro.")
         running = true
         current = -999
@@ -197,7 +203,7 @@ class Macro {
     }
 
     fun stop() {
-        if(!running) return
+        if (!running) return
         Logger.info("Stopping macro.")
         running = false
     }

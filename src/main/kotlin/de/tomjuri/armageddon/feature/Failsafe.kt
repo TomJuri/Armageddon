@@ -14,19 +14,33 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnection
 
 class Failsafe {
 
-    private val pingAlertTimer: Timer = Timer()
+    private val pingAlertTimer = Timer()
+    private val reactionStartTimer = Timer()
+    private var shouldReact = false
+    private var movement = ""
     var pingAlertPlaying = false
     private var numPings = 15
+    val messages = listOf("wtf", "wtf??", "lmao", "lmfao", "tf", "ok admins",
+            "?!?", "check?", "uhhhh", "nice", "oh wtf", "bruh that scared me", "bruh")
 
-    private fun emergency(message: String) {
+    fun emergency(message: String, movement: String) {
         Logger.error(message)
+        reactionStartTimer.startTimer(1500)
         pingAlertPlaying = true
         numPings = 15
-        Armageddon.macro.stop()
+        shouldReact = true
+        this.movement = movement
     }
 
     @SubscribeEvent
     fun onTick(event: ClientTickEvent) {
+        if(reactionStartTimer.isDone() && shouldReact) {
+            Armageddon.macro.stop()
+            shouldReact = false
+            if(movement.isNotEmpty())
+                player.sendChatMessage("/ac ${messages.random()}")
+                Armageddon.movementRecorder.play(movement)
+        }
         if (!pingAlertPlaying) return
         if (numPings <= 0) {
             pingAlertPlaying = false
@@ -50,7 +64,7 @@ class Failsafe {
         if (!canRotationCheckTrigger)
             return
         if (event.packet.pitch - player.rotationPitch * -1 > Armageddon.config.rotationCheckThreshold || event.packet.yaw - player.rotationYaw * -1 > Armageddon.config.rotationCheckThreshold)
-            emergency("You probably have been rotation checked!")
+            emergency("You probably have been rotation checked!", failsafeMovementNoMovement)
     }
 
     @SubscribeEvent
@@ -62,7 +76,7 @@ class Failsafe {
     @SubscribeEvent
     fun onUnloadWorld(event: Unload) {
         if (!Armageddon.macro.isRunning()) return
-        emergency("You probably have been kicked from the server!")
+        emergency("You probably have been kicked from the server!", "")
     }
 
     @SubscribeEvent
@@ -92,7 +106,7 @@ class Failsafe {
                 && backBottom == Blocks.stone
                 && backTop == Blocks.stone
         ) {
-            emergency("You probably have been hardstone box checked!")
+            emergency("You probably have been hardstone box checked!", failsafeMovementNoMovement)
         }
     }
 
@@ -111,6 +125,6 @@ class Failsafe {
             }
         }
         if(bedrock > 2 && oak)
-            emergency("You probably have been bedrock box checked!")
+            emergency("You probably have been bedrock box checked!", failsafeMovement)
     }
 }
