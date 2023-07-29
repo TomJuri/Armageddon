@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.utils.commands.CommandManager
 import de.tomjuri.armageddon.command.ArmageddonCommand
 import de.tomjuri.armageddon.config.ArmageddonConfig
 import de.tomjuri.armageddon.feature.Failsafe
+import de.tomjuri.armageddon.feature.MovementRecorder
 import de.tomjuri.armageddon.macro.Macro
 import de.tomjuri.armageddon.macro.RouteManager
 import de.tomjuri.armageddon.util.AuthUtil
@@ -25,6 +26,7 @@ class Armageddon {
         lateinit var routeManager: RouteManager
         lateinit var macro: Macro
         lateinit var failsafe: Failsafe
+        lateinit var movementRecorder: MovementRecorder
     }
 
     @Mod.EventHandler
@@ -55,10 +57,12 @@ class Armageddon {
                         routeManager = RouteManager()
                         macro = Macro()
                         failsafe = Failsafe()
+                        movementRecorder = MovementRecorder()
                         CommandManager.register(ArmageddonCommand())
                         MinecraftForge.EVENT_BUS.register(routeManager)
                         MinecraftForge.EVENT_BUS.register(macro)
                         MinecraftForge.EVENT_BUS.register(failsafe)
+                        MinecraftForge.EVENT_BUS.register(movementRecorder)
                         return
                     }
                 }

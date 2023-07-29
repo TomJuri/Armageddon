@@ -1,5 +1,6 @@
 package de.tomjuri.armageddon.feature
 
+import de.tomjuri.annotation.NoNative
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.event.PacketEvent
 import de.tomjuri.armageddon.util.*

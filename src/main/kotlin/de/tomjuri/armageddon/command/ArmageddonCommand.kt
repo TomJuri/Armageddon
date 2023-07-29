@@ -29,4 +29,20 @@ class ArmageddonCommand {
             Logger.info("Waypoints are now enabled.")
         }
     }
+
+    @SubCommand(description = "Start movement recorder")
+    fun startrec() {
+        Armageddon.movementRecorder.startRecording()
+    }
+
+    @SubCommand(description = "Stop movement recorder")
+    fun stoprec(name: String) {
+        Armageddon.movementRecorder.stopRecording(name)
+    }
+
+    @SubCommand(description = "Play movement recorder")
+    fun playrec(name: String) {
+        Armageddon.movementRecorder.readRecording(name)
+        Armageddon.movementRecorder.play()
+    }
 }

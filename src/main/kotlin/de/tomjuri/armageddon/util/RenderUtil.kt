@@ -1,5 +1,6 @@
 package de.tomjuri.armageddon.util
 
+import de.tomjuri.annotation.NoNative
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
@@ -9,7 +10,6 @@ import net.minecraftforge.client.event.RenderWorldLastEvent
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.sqrt
-
 
 @NoNative
 object RenderUtil {

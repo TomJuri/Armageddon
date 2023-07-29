@@ -1,5 +1,6 @@
 package de.tomjuri.armageddon.macro
 
+import de.tomjuri.annotation.NoNative
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.util.*
 import net.minecraftforge.client.event.RenderWorldLastEvent

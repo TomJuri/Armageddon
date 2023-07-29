@@ -1,5 +1,6 @@
 package de.tomjuri.armageddon.util
 
+import de.tomjuri.annotation.NoNative
 import net.minecraft.util.MathHelper
 import kotlin.math.pow
 
