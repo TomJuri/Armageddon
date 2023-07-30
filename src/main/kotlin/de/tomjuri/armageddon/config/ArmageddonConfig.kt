@@ -41,6 +41,8 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
 
     @Slider(name = "Swipe time", min = 300f, max = 1000f, step = 1)
     var swipeTime = 500
+    @Slider(name = "Swipe time", min = 300f, max = 1000f, step = 1)
+    var swipeTime = 500
 
     @Slider(name = "Rotation check threshold", min = 0f, max = 8f)
     var rotationCheckThreshold = 2f

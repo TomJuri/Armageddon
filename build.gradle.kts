@@ -1,12 +1,10 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.9.0"
+    id("java")
     id("cc.polyfrost.loom") version "0.10.0.5"
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("net.kyori.blossom") version "1.3.1"
+    id("io.freefair.lombok") version "8.1.0"
 }
 
 group = "de.tomjuri"
@@ -26,17 +24,12 @@ dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
-
     compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:0.2.0-alpha+")
     embed("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+")
-
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-
     modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
-
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
-    embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     embed("org.json:json:20230227")
     embed("com.squareup.okhttp3:okhttp:3.14.9")
 }
@@ -85,7 +78,6 @@ tasks {
     }
 
     shadowJar {
-        relocate("kotlin", "de.tomjuri.armageddon.relocate.kotlin")
         relocate("org.json", "de.tomjuri.armageddon.relocate.org.json")
         relocate("okhttp3", "de.tomjuri.armageddon.relocate.okhttp3")
         relocate("okio", "de.tomjuri.armageddon.relocate.okio")
@@ -102,10 +94,6 @@ tasks {
     withType<JavaCompile> {
         targetCompatibility = "1.8"
         sourceCompatibility = "1.8"
-    }
-
-    withType<KotlinCompile> {
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
     }
 }
 
