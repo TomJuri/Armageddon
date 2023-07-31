@@ -15,7 +15,7 @@ public class MacroThread extends Thread {
         while (true) {
             // Switch to rod
             macro.state = Macro.State.SWITCH_TO_ROD;
-            Armageddon.INSTANCE.getPlayer().inventory.currentItem = ArmageddonConfig.rodSlot - 1;
+            Ref.player().inventory.currentItem = ArmageddonConfig.rodSlot - 1;
             SleepUtil.sleep(100);
 
             // Summon dillo
@@ -25,19 +25,19 @@ public class MacroThread extends Thread {
 
             // Switch to drill
             macro.state = Macro.State.SWITCH_TO_DRILL;
-            Armageddon.INSTANCE.getPlayer().inventory.currentItem = ArmageddonConfig.drillSlot - 1;
-            SleepUtil.sleep(200);
+            Ref.player().inventory.currentItem = ArmageddonConfig.drillSlot - 1;
+            SleepUtil.sleep(100);
 
             // Normalize pitch
             macro.state = Macro.State.NORMALIZE_PITCH;
-            RotationUtil.ease(new RotationUtil.Rotation(Armageddon.INSTANCE.getPlayer().rotationYaw, -3f), 100);
+            RotationUtil.ease(new RotationUtil.Rotation(Ref.player().rotationYaw, -3f), 100);
             SleepUtil.sleep(100);
 
             // Mount dillo
             macro.state = Macro.State.MOUNT_DILLO;
             KeyBindUtil.rightClick();
             SleepUtil.sleep(200);
-            if(!Armageddon.INSTANCE.getPlayer().isRiding()) {
+            if(!Ref.player().isRiding()) {
                 Logger.error("Playing is not riding the armadillo!");
                 Macro.stop();
                 break;
@@ -45,22 +45,22 @@ public class MacroThread extends Thread {
 
             // Mine
             macro.state = Macro.State.MINE;
-            KeyBindUtil.setKey(Armageddon.INSTANCE.getMinecraft().gameSettings.keyBindJump.getKeyCode(), true);
-            RotationUtil.easeCertain(new RotationUtil.Rotation(ArmageddonConfig.swipeRange, Armageddon.INSTANCE.getPlayer().rotationPitch), ArmageddonConfig.swipeTime);
+            KeyBindUtil.setKey(Ref.mc().gameSettings.keyBindJump.getKeyCode(), true);
+            RotationUtil.easeCertain(new RotationUtil.Rotation(ArmageddonConfig.swipeRange, Ref.player().rotationPitch), ArmageddonConfig.swipeTime);
             SleepUtil.sleep(100);
-            KeyBindUtil.setKey(Armageddon.INSTANCE.getMinecraft().gameSettings.keyBindJump.getKeyCode(), false);
+            KeyBindUtil.setKey(Ref.mc().gameSettings.keyBindJump.getKeyCode(), false);
             SleepUtil.sleep(ArmageddonConfig.swipeTime - 100);
 
             // Switch to rod again
             macro.state = Macro.State.SWITCH_TO_ROD_AGAIN;
-            Armageddon.INSTANCE.getPlayer().inventory.currentItem = ArmageddonConfig.rodSlot - 1;
+            Ref.player().inventory.currentItem = ArmageddonConfig.rodSlot - 1;
             SleepUtil.sleep(100);
 
             // Desummon dillo
             macro.state = Macro.State.DESUMMON_DILLO;
             KeyBindUtil.rightClick();
             SleepUtil.sleep(100);
-            if(Armageddon.INSTANCE.getPlayer().isRiding()) {
+            if(Ref.player().isRiding()) {
                 Logger.error("Playing is still riding the armadillo!");
                 Macro.stop();
                 break;
@@ -68,17 +68,17 @@ public class MacroThread extends Thread {
 
             // Switch to drill again
             macro.state = Macro.State.SWITCH_TO_DRILL_AGAIN;
-            Armageddon.INSTANCE.getPlayer().inventory.currentItem = ArmageddonConfig.drillSlot - 1;
+            Ref.player().inventory.currentItem = ArmageddonConfig.drillSlot - 1;
             SleepUtil.sleep(100);
 
             // Switch to AOTV
             macro.state = Macro.State.SWITCH_TO_AOTV;
-            Armageddon.INSTANCE.getPlayer().inventory.currentItem = ArmageddonConfig.aotvSlot - 1;
+            Ref.player().inventory.currentItem = ArmageddonConfig.aotvSlot - 1;
             SleepUtil.sleep(100);
 
             // Sneak
             macro.state = Macro.State.SNEAK;
-            KeyBindUtil.setKey(Armageddon.INSTANCE.getMinecraft().gameSettings.keyBindSneak.getKeyCode(), true);
+            KeyBindUtil.setKey(Ref.mc().gameSettings.keyBindSneak.getKeyCode(), true);
             SleepUtil.sleep(100);
 
             // Look at block
@@ -96,10 +96,16 @@ public class MacroThread extends Thread {
             macro.state = Macro.State.TELEPORT;
             KeyBindUtil.rightClick();
             SleepUtil.sleep(100);
+            RouteManager.current++;
+            if(RouteManager.getStandingOn() != RouteManager.current) {
+                Logger.error("Did not arrive at next waypoint!");
+                Macro.stop();
+                break;
+            }
 
             // Unsneak
             macro.state = Macro.State.UNSNEAK;
-            KeyBindUtil.setKey(Armageddon.INSTANCE.getMinecraft().gameSettings.keyBindSneak.getKeyCode(), false);
+            KeyBindUtil.setKey(Ref.mc().gameSettings.keyBindSneak.getKeyCode(), false);
             SleepUtil.sleep(100);
         }
     }
