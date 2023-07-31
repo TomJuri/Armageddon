@@ -1,11 +1,13 @@
 package de.tomjuri.armageddon.macro;
 
 import de.tomjuri.armageddon.util.Logger;
+import lombok.Getter;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class Macro {
 
+    @Getter
     private static boolean enabled = false;
     public State state = State.SWITCH_TO_ROD;
 
