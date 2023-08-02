@@ -51,7 +51,7 @@ public class Failsafe {
         if (!(event.getPacket() instanceof S08PacketPlayerPosLook))
             return;
         S08PacketPlayerPosLook packet = (S08PacketPlayerPosLook) event.getPacket();
-        if (Macro.getState() == Macro.State.MOUNT_DILLO || Macro.getState() == Macro.State.TELEPORT)
+        if (Macro.state == Macro.State.MOUNT_DILLO || Macro.state == Macro.State.TELEPORT)
             return;
         float deltaYaw = Math.max(Math.abs(packet.getYaw()), Math.abs(Ref.player().rotationYaw)) - Math.min(Math.abs(packet.getYaw()), Math.abs(Ref.player().rotationYaw));
         float deltaPitch = Math.max(Math.abs(packet.getPitch()), Math.abs(Ref.player().rotationPitch)) - Math.min(Math.abs(packet.getPitch()), Math.abs(Ref.player().rotationPitch));
