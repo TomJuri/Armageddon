@@ -1,6 +1,5 @@
 package de.tomjuri.armageddon.macro;
 
-import de.tomjuri.armageddon.Armageddon;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
 import de.tomjuri.armageddon.util.*;
 import lombok.AllArgsConstructor;

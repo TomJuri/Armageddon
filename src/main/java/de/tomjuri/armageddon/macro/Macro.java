@@ -9,7 +9,8 @@ public class Macro {
 
     @Getter
     private static boolean enabled = false;
-    public State state = State.SWITCH_TO_ROD;
+    @Getter
+    static State state = State.SWITCH_TO_ROD;
 
     public static void start() {
         Logger.info("Starting macro.");
