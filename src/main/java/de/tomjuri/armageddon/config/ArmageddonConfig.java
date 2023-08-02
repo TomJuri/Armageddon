@@ -10,6 +10,7 @@ import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import de.tomjuri.armageddon.Armageddon;
+import de.tomjuri.armageddon.macro.Macro;
 
 public class ArmageddonConfig extends Config {
     @KeyBind(name = "Toggle macro")
@@ -38,6 +39,6 @@ public class ArmageddonConfig extends Config {
     public ArmageddonConfig() {
         super(new Mod("armageddon", ModType.UTIL_QOL), "armageddon.json");
         initialize();
-        registerKeyBind(toggleMacro, () -> Armageddon.INSTANCE.getMacro().toggle());
+        registerKeyBind(toggleMacro, Macro::toggle);
     }
 }

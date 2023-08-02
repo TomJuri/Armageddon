@@ -42,8 +42,8 @@ public class RenderUtil {
         drawLine(event, frontBottomRight, backBottomLeft, 2f, color);
     }
 
-    public void drawLine(RenderWorldLastEvent event, Vec3 from, Vec3 to, float lineWidth, Color color) {
-        Entity render = Armageddon.INSTANCE.getMinecraft().getRenderViewEntity();
+    public static void drawLine(RenderWorldLastEvent event, Vec3 from, Vec3 to, float lineWidth, Color color) {
+        Entity render = Ref.mc().getRenderViewEntity();
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer bufferBuilder = tessellator.getWorldRenderer();
         double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * event.partialTicks;
@@ -76,17 +76,17 @@ public class RenderUtil {
     }
 
     public static void renderText(BlockPos pos, String text) {
-        double renderPosX = Armageddon.INSTANCE.getMinecraft().getRenderManager().viewerPosX;
-        double renderPosY = Armageddon.INSTANCE.getMinecraft().getRenderManager().viewerPosY;
-        double renderPosZ = Armageddon.INSTANCE.getMinecraft().getRenderManager().viewerPosZ;
+        double renderPosX = Ref.mc().getRenderManager().viewerPosX;
+        double renderPosY = Ref.mc().getRenderManager().viewerPosY;
+        double renderPosZ = Ref.mc().getRenderManager().viewerPosZ;
         double x = pos.getX() - renderPosX;
         double y = pos.getY() - renderPosY;
         double z = pos.getZ() - renderPosZ;
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
-        GlStateManager.rotate(-Armageddon.INSTANCE.getMinecraft().getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
-        GlStateManager.rotate(Armageddon.INSTANCE.getMinecraft().getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f);
-        double scale = 0.005 * Math.sqrt(Armageddon.INSTANCE.getPlayer().getDistanceSq(pos));
+        GlStateManager.rotate(-Ref.mc().getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(Ref.mc().getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f);
+        double scale = 0.005 * Math.sqrt(Ref.player().getDistanceSq(pos));
         GlStateManager.scale(-scale, -scale, scale);
         GL11.glNormal3f(0.0f, 1.0f, 0.0f);
         GlStateManager.disableLighting();
@@ -94,7 +94,7 @@ public class RenderUtil {
         GlStateManager.disableDepth();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        Armageddon.INSTANCE.getMinecraft().fontRendererObj.drawString(text, 0, 0, 0xFFFFFF);
+        Ref.mc().fontRendererObj.drawString(text, 0, 0, 0xFFFFFF);
         GlStateManager.enableDepth();
         GlStateManager.depthMask(true);
         GlStateManager.enableLighting();

@@ -57,7 +57,7 @@ public class Armageddon {
                         Ref.mc().getSession().getPlayerID().equals(split[2]) &&
                         System.currentTimeMillis() - Long.parseLong(split[3]) < 20000) {
                     config = new ArmageddonConfig();
-                    routeManager = new RouteManager();
+            /*        routeManager = new RouteManager();
                     macro = new Macro();
                     failsafe = new Failsafe();
                     movementRecorder = new MovementRecorder();
@@ -66,7 +66,7 @@ public class Armageddon {
                     MinecraftForge.EVENT_BUS.register();
                     MinecraftForge.EVENT_BUS.register(macro);
                     MinecraftForge.EVENT_BUS.register(failsafe);
-                    MinecraftForge.EVENT_BUS.register(movementRecorder);
+                    MinecraftForge.EVENT_BUS.register(movementRecorder);*/
                     return;
                 }
             }

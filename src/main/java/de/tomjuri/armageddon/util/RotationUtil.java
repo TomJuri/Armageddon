@@ -15,7 +15,7 @@ public class RotationUtil {
     public static void ease(Rotation rotation, long durationMillis) {
         if (!done) return;
         done = false;
-        startRotation = new Rotation(Armageddon.INSTANCE.getPlayer().rotationYaw, Armageddon.INSTANCE.getPlayer().rotationPitch);
+        startRotation = new Rotation(Ref.player().rotationYaw, Ref.player().rotationPitch);
         Rotation neededChange = getNeededChange(startRotation, rotation);
         endRotation = new Rotation(startRotation.getYaw() + neededChange.getYaw(), startRotation.getPitch() + neededChange.getPitch());
         startTime = System.currentTimeMillis();
@@ -25,7 +25,7 @@ public class RotationUtil {
     public static void easeCertain(Rotation rotation, long durationMillis) {
         if (!done) return;
         done = false;
-        Rotation currentRotation = new Rotation(Armageddon.INSTANCE.getPlayer().rotationYaw, Armageddon.INSTANCE.getPlayer().rotationPitch);
+        Rotation currentRotation = new Rotation(Ref.player().rotationYaw, Ref.player().rotationPitch);
         float endRotationYaw = currentRotation.getYaw() + rotation.getYaw();
         startRotation = currentRotation;
         endRotation = new Rotation(endRotationYaw, rotation.getPitch());
@@ -36,12 +36,12 @@ public class RotationUtil {
     public static void onRenderWorldLast() {
         if (done) return;
         if (System.currentTimeMillis() <= endTime) {
-            Armageddon.INSTANCE.getPlayer().rotationYaw = interpolate(startRotation.getYaw(), endRotation.getYaw());
-            Armageddon.INSTANCE.getPlayer().rotationPitch = interpolate(startRotation.getPitch(), endRotation.getPitch());
+            Ref.player().rotationYaw = interpolate(startRotation.getYaw(), endRotation.getYaw());
+            Ref.player().rotationPitch = interpolate(startRotation.getPitch(), endRotation.getPitch());
             return;
         }
-        Armageddon.INSTANCE.getPlayer().rotationYaw = endRotation.getYaw();
-        Armageddon.INSTANCE.getPlayer().rotationPitch = endRotation.getPitch();
+        Ref.player().rotationYaw = endRotation.getYaw();
+        Ref.player().rotationPitch = endRotation.getPitch();
         done = true;
     }
 

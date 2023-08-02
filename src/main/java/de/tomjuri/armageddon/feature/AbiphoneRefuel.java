@@ -15,9 +15,9 @@ public class AbiphoneRefuel {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (!Macro.isEnabled()) return;
-        String stripColoring = TextUtils.stripColor(section);
+  /*      String stripColoring = TextUtils.stripColor(section);
         int fuel = Math.max(0, Integer.parseInt(splitStats[0]));
-        int maxFuel = Math.max(1, Integer.parseInt(splitStats[1]));
+        int maxFuel = Math.max(1, Integer.parseInt(splitStats[1]));*/
     }
 
 }
