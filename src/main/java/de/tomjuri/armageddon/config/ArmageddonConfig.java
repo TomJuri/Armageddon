@@ -33,6 +33,10 @@ public class ArmageddonConfig extends Config {
     public static int swipeTime = 500;
     @Slider(name = "Look at block time", min = 150f, max = 500f, step = 1)
     public static int lookAtBlockTime = 500;
+    @Slider(name = "Delay after mounting dillo", min = 100f, max = 500f, step = 50)
+    public static int delayAfterMountingDillo = 200;
+    @Slider(name = "Delay after teleporting", min = 100f, max = 900f, step = 50)
+    public static int delayAfterTeleporting = 250;
     @Slider(name = "Rotation check threshold", min = 0f, max = 8f)
     public static float rotationCheckThreshold = 2f;
 

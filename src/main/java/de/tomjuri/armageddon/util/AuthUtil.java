@@ -48,11 +48,11 @@ public class AuthUtil {
         Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] encryptedData = cipher.doFinal(message);
-        return Base64.getEncoder().encodeToString(encryptedData);
+        return Base64.getEncoder().encodeToString(Base64.getEncoder().encodeToString(encryptedData).getBytes());
     }
 
     public static String rsaDecrypt(String encryptedText, RSAPrivateKey privateKey) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
-        byte[] encryptedData = Base64.getDecoder().decode(encryptedText);
+        byte[] encryptedData = Base64.getDecoder().decode(Base64.getDecoder().decode(encryptedText));
         Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] decryptedData = cipher.doFinal(encryptedData);

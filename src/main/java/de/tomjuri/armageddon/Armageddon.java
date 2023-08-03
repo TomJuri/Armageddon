@@ -3,6 +3,7 @@ package de.tomjuri.armageddon;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import de.tomjuri.armageddon.command.ArmageddonCommand;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
+import de.tomjuri.armageddon.feature.AbiphoneRefuel;
 import de.tomjuri.armageddon.util.AuthUtil;
 import de.tomjuri.armageddon.util.Ref;
 import net.minecraft.client.Minecraft;
@@ -57,7 +58,8 @@ public class Armageddon {
                         Ref.mc().getSession().getPlayerID().equals(split[2]) &&
                         System.currentTimeMillis() - Long.parseLong(split[3]) < 20000) {
                     config = new ArmageddonConfig();
-            /*        routeManager = new RouteManager();
+                    MinecraftForge.EVENT_BUS.register(new AbiphoneRefuel());
+                /*        routeManager = new RouteManager();
                     macro = new Macro();
                     failsafe = new Failsafe();
                     movementRecorder = new MovementRecorder();
@@ -70,8 +72,7 @@ public class Armageddon {
                     return;
                 }
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
 
         throw new CustomModLoadingErrorDisplayException() {
             @Override
@@ -82,10 +83,11 @@ public class Armageddon {
             public void drawScreen(GuiErrorScreen guiErrorScreen, FontRenderer fontRenderer, int i, int j, float f) {
                 guiErrorScreen.drawCenteredString(fontRenderer, "Authentication for Armageddon failed!", guiErrorScreen.width / 2, 20, 16711680);
                 guiErrorScreen.drawString(fontRenderer, "Possible solutions are:", 20, 40, 16777215);
-                guiErrorScreen.drawString(fontRenderer, "   - Make sure you are on the account you registered.", 20, 50, 16777215);
-                guiErrorScreen.drawString(fontRenderer, "   - Reset your HWID using /resethwid on the Discord Server", 20, 60, 16777215);
-                guiErrorScreen.drawString(fontRenderer, "   - Check that you have a working Internet connection", 20, 70, 16777215);
-                guiErrorScreen.drawString(fontRenderer, "   - Contact a staff member on the Discord Server", 20, 80, 16777215);
+                guiErrorScreen.drawString(fontRenderer, "- Make sure you are on the account you registered.", 60, 50, 16777215);
+                guiErrorScreen.drawString(fontRenderer, "- Reset your HWID using /resethwid on the Discord Server", 60, 60, 16777215);
+                guiErrorScreen.drawString(fontRenderer, "- Check that you have a working Internet connection", 60, 70, 16777215);
+                guiErrorScreen.drawString(fontRenderer, "- Contact a staff member on the Discord Server", 60, 80, 16777215);
+                guiErrorScreen.drawString(fontRenderer, "Press ALT+F4 to quit.", 20, 100, 16711680);
             }
         };
     }
