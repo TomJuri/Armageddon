@@ -1,1 +1,1 @@
-If you somehow obtained this sourcecode please message `@tomjuri` on discord.
+If you somehow obtained this sourcecode please message `@tomjuri` on Discord.
