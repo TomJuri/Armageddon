@@ -23,6 +23,8 @@ public class ArmageddonConfig extends Config {
     public static int rodSlot = 2;
     @Slider(name = "AOTV slot", min = 1f, max = 8f, step = 1)
     public static int aotvSlot = 3;
+    @Slider(name = "Abiphone slot", min = 1f, max = 8f, step = 1)
+    public static int abiphoneSlot = 4;
     @Switch(name = "Show waypoints")
     public static boolean showWaypoints = true;
     @Switch(name = "Mute game sounds")

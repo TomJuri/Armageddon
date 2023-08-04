@@ -3,7 +3,7 @@ package de.tomjuri.armageddon.util;
 public class Timer {
     private long endTime = System.currentTimeMillis();
 
-    public void startTimer(long millis) {
+    public void start(long millis) {
         endTime = System.currentTimeMillis() + millis;
     }
 

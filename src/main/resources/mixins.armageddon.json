@@ -2,7 +2,12 @@
   "compatibilityLevel": "JAVA_8",
   "package": "de.tomjuri.armageddon.mixin",
   "client": [
-
+    "MinecraftInvoker",
+    "MixinSoundManager"
   ],
-  "verbose": true
+  "verbose": true,
+  "mixins": [
+    "MixinFMLHandshakeMessage",
+    "MixinNetworkManager"
+  ]
 }
