@@ -27,7 +27,7 @@ public class RouteManager {
             Logger.error("Unable to parse route!");
             return;
         }
-        Logger.info("Route was reloaded");
+        Logger.info("Route was reloaded!");
     }
 
     public static int getStandingOn() {

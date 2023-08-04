@@ -11,17 +11,17 @@ import de.tomjuri.armageddon.util.Logger;
 @Command(value = "armageddon")
 public class ArmageddonCommand {
 
-    @Main(description = "Opens the GUI")
+    @Main(description = "Opens click GUI.")
     private void main() {
         Armageddon.INSTANCE.openGUI();
     }
 
-    @SubCommand(description = "Reloads the route")
+    @SubCommand(description = "Reloads the route.")
     private void reload() {
         RouteManager.reloadRoute();
     }
 
-    @SubCommand(description = "Toggles the waypoints")
+    @SubCommand(description = "Toggles waypoints.")
     private void waypoints() {
         if(ArmageddonConfig.showWaypoints) {
             ArmageddonConfig.showWaypoints = false;
