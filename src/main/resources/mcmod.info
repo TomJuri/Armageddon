@@ -1,8 +1,8 @@
 [
   {
-    "modid": "armageddon",
-    "name": "Armageddon",
-    "description": "Armadillo macro!",
+    "modid": "${id}",
+    "name": "${name}",
+    "description": "Armadillo Macro!",
     "version": "${version}",
     "mcversion": "1.8.9",
     "url": "",
