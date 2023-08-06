@@ -3,11 +3,9 @@ package de.tomjuri.armageddon.feature;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
 import de.tomjuri.armageddon.macro.Macro;
 import de.tomjuri.armageddon.util.*;
-import net.minecraft.inventory.ContainerChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import scala.reflect.internal.Trees;
 
 import java.text.NumberFormat;
 import java.util.Locale;

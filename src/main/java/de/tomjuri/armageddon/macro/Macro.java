@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+@Getter
 public class Macro {
 
     @Getter private static boolean enabled = false;

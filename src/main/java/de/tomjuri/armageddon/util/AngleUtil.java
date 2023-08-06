@@ -1,6 +1,5 @@
 package de.tomjuri.armageddon.util;
 
-import de.tomjuri.armageddon.Armageddon;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 

@@ -1,6 +1,5 @@
 package de.tomjuri.armageddon.util;
 
-import de.tomjuri.armageddon.Armageddon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minecraft.util.MathHelper;

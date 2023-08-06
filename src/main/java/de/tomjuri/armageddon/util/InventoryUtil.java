@@ -1,7 +1,6 @@
 package de.tomjuri.armageddon.util;
 
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;

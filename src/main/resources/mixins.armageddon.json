@@ -6,5 +6,11 @@
   "injectors": {
     "maxShiftBy": 5
   },
-  "verbose": true
+  "verbose": true,
+  "mixins": [
+    "MixinFMLHandshakeMessage",
+    "MixinNetworkManager",
+    "MinecraftInvoker",
+    "MixinSoundManager"
+  ]
 }

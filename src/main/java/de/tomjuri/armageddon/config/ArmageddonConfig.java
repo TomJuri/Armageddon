@@ -9,7 +9,6 @@ import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
-import de.tomjuri.armageddon.Armageddon;
 import de.tomjuri.armageddon.macro.Macro;
 
 public class ArmageddonConfig extends Config {
@@ -41,6 +40,8 @@ public class ArmageddonConfig extends Config {
     public static int delayAfterTeleporting = 250;
     @Slider(name = "Rotation check threshold", min = 0f, max = 8f)
     public static float rotationCheckThreshold = 2f;
+    @Slider(name = "Failsafe Volume", min = 0f, max = 100f, step = 5)
+    public static float failsafeVolume = 100f;
 
     public ArmageddonConfig() {
         super(new Mod("armageddon", ModType.UTIL_QOL), "armageddon.json");

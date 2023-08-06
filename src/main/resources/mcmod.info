@@ -1,7 +1,7 @@
 [
   {
-    "modid": "${id}",
-    "name": "${name}",
+    "modid": "armageddon",
+    "name": "Armageddon",
     "description": "Armadillo Macro!",
     "version": "${version}",
     "mcversion": "1.8.9",
