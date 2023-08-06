@@ -7,18 +7,19 @@ import de.tomjuri.armageddon.Armageddon;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
 import de.tomjuri.armageddon.macro.RouteManager;
 import de.tomjuri.armageddon.util.Logger;
+import de.tomjuri.armageddon.util.SoundUtil;
 
 @Command(value = "armageddon")
 public class ArmageddonCommand {
 
     @Main(description = "Opens click GUI.")
     private void main() {
-        Armageddon.INSTANCE.openGUI();
+        Armageddon.getInstance().getConfig().openGui();
     }
 
     @SubCommand(description = "Reloads the route.")
     private void reload() {
-        RouteManager.reloadRoute();
+        Armageddon.getInstance().getRouteManager().reloadRoute();
     }
 
     @SubCommand(description = "Toggles waypoints.")
@@ -30,5 +31,10 @@ public class ArmageddonCommand {
             ArmageddonConfig.showWaypoints = true;
             Logger.info("Waypoints are now enabled.");
         }
+    }
+
+    @SubCommand(description = "Test the failsafe.")
+    private void testfailsafe() {
+        Armageddon.getInstance().getFailsafe().emergency("This is a test failsafe message.", Armageddon.getInstance().getFailsafe().failsafeMovement);
     }
 }

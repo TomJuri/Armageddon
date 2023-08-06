@@ -4,7 +4,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 public class AngleUtil {
-    public static RotationUtil.Rotation getRoationToLookAt(BlockPos targetPos) {
+    public static RotationUtil.Rotation getRotationForBlock(BlockPos targetPos) {
         double deltaX = targetPos.getX() + 0.5 - Ref.player().posX;
         double deltaY = targetPos.getY() + 0.5 - Ref.player().posY - 1.62 - 0.08 + 0.5;
         double deltaZ = targetPos.getZ() + 0.5 - Ref.player().posZ;

@@ -1,11 +1,16 @@
 package de.tomjuri.armageddon;
 
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
+import de.tomjuri.armageddon.command.ArmageddonCommand;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
 import de.tomjuri.armageddon.feature.AbiphoneRefuel;
 import de.tomjuri.armageddon.feature.Failsafe;
 import de.tomjuri.armageddon.gui.LicenseInvalidDisplay;
+import de.tomjuri.armageddon.macro.Macro;
+import de.tomjuri.armageddon.macro.RouteManager;
 import de.tomjuri.armageddon.util.AuthUtil;
 import de.tomjuri.armageddon.util.Ref;
+import lombok.Getter;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,20 +24,21 @@ import java.security.interfaces.RSAPublicKey;
 @Mod(modid = "armageddon", name = "Armageddon", version = "%%VERSION%%")
 public class Armageddon {
 
-    @Mod.Instance("armageddon")
-    public static Armageddon INSTANCE;
+    @Getter
+    private static Armageddon instance;
+    @Getter
     private ArmageddonConfig config;
+    @Getter
+    private AbiphoneRefuel abiphoneRefuel;
+    @Getter
+    private Failsafe failsafe;
+    @Getter
+    private Macro macro;
+    @Getter
+    private RouteManager routeManager;
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
-        System.out.println("INIT");
-        System.out.println("INIT");
-        System.out.println("INIT");
-        System.out.println("INIT");
-        System.out.println("INIT");
-        System.out.println("INIT");
-        System.out.println("INIT");
-        System.out.println("INIT");
         try {
             String realData = AuthUtil.getHWID() + "|" + System.currentTimeMillis() + "|" + Ref.mc().getSession().getPlayerID();
             RSAPublicKey publicKey = AuthUtil.getPublicKey("MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAtXyd0UpgM40+t5yLwYesXGHNx/QU/HF1sa2S5c0q2SbQ8YeCaLj1apO0wXd626Axtek+IKjeUMeYrjM8XYerQ9U2T+BszUq9A7C5OdmZFDMnvRnDl9KBlJccRYTFvZG6X1UW+RkLnJ3Mpf8WHOgiVSE27+rcWc1GwCEWVElDFajbRxZFYJvXJVrulB36rz7I6RLELagmUFA23R3/SUZZvVRfnjXDx0oR3kWo0ZJgzqbFG/dQEa9ASD6lzI2aT0cESDj8NJxCbH55AyIzauUDjq7yTLvYsF4xLC3afQblnIKjrklI7ZRwVaT0j6edehCjZtqj9ga7Hxp2JlkSn5PREPgq80APmCwelwK2UkdNRyyHereiiC1RahT1raS2F+OfrDYRi6FxF0mowRh/AsszcgQfSV7WC9b9vXwDCzotuuZ9t9xoHP6wy/zkeCMOX3J5cSuM+UnnO1DkNjvNN3BLs/PSSga3havwGTj5vefx17h0e22kHAnH3LMLcq9RFn2evlS9TziezeMPYASDOuxXWYUQk+JwPNAP817/yuLZinjBGFpjC3gFVhxi6xW8D8dYNH8eQZx/eqWdfGZLGsp4de2aLkP5sSDG3modrYtTh57zfAc508nKLdjg9scoian2NP0gD1ItQkgPb1rF7TNsJjZIvAthdea/6OKY3Mnzzn0CAwEAAQ==");
@@ -63,18 +69,20 @@ public class Armageddon {
 
 
                     config = new ArmageddonConfig();
-                    MinecraftForge.EVENT_BUS.register(new AbiphoneRefuel());
-                    MinecraftForge.EVENT_BUS.register(new Failsafe());
-
-
-
-
+                    abiphoneRefuel = new AbiphoneRefuel();
+                    failsafe = new Failsafe();
+                    macro = new Macro();
+                    routeManager = new RouteManager();
+                    CommandManager.register(new ArmageddonCommand());
+                    MinecraftForge.EVENT_BUS.register(abiphoneRefuel);
+                    MinecraftForge.EVENT_BUS.register(failsafe);
+                    MinecraftForge.EVENT_BUS.register(macro);
+                    MinecraftForge.EVENT_BUS.register(routeManager);
+                    instance = this;
                     return;
                 }
             }
         } catch (Exception ignored) { }
         throw new LicenseInvalidDisplay();
     }
-
-    public void openGUI() { config.openGui(); }
 }

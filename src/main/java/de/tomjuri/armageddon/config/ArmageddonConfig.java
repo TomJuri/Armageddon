@@ -9,6 +9,7 @@ import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
+import de.tomjuri.armageddon.Armageddon;
 import de.tomjuri.armageddon.macro.Macro;
 
 public class ArmageddonConfig extends Config {
@@ -28,6 +29,8 @@ public class ArmageddonConfig extends Config {
     public static boolean showWaypoints = true;
     @Switch(name = "Mute game sounds")
     public static boolean muteGameSounds = false;
+    @Switch(name = "Abiphone refuel")
+    public static boolean abiphoneRefuel = true;
     @Slider(name = "Swipe range", min = 180f, max = 360f, step = 1)
     public static int swipeRange = 320;
     @Slider(name = "Swipe time", min = 300f, max = 1000f, step = 1)
@@ -46,6 +49,6 @@ public class ArmageddonConfig extends Config {
     public ArmageddonConfig() {
         super(new Mod("armageddon", ModType.UTIL_QOL), "armageddon.json");
         initialize();
-        registerKeyBind(toggleMacro, Macro::toggle);
+        registerKeyBind(toggleMacro, () -> Armageddon.getInstance().getMacro().toggle());
     }
 }

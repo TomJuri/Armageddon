@@ -1,20 +1,21 @@
 package de.tomjuri.armageddon.macro;
 
+import de.tomjuri.armageddon.Armageddon;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
 import de.tomjuri.armageddon.util.*;
 import lombok.Getter;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-@Getter
 public class Macro {
 
-    @Getter private static boolean enabled = false;
-    @Getter private static State state = State.SWITCH_TO_ROD;
-    private static final Timer timer = new Timer();
+    @Getter private boolean enabled = false;
+    @Getter private State state = State.SWITCH_TO_ROD;
+    private final Timer timer = new Timer();
 
     @SubscribeEvent
-    public static void onTick(TickEvent.ClientTickEvent event) {
+    public void onTick(TickEvent.ClientTickEvent event) {
         if(!enabled) return;
         if(!timer.isDone()) return;
         switch (state) {
@@ -64,7 +65,7 @@ public class Macro {
                 timer.start(100);
                 break;
             case LOOK_AT_BLOCK:
-                RotationUtil.ease(AngleUtil.getRoationToLookAt(RouteManager.getNext()), ArmageddonConfig.lookAtBlockTime);
+                RotationUtil.ease(AngleUtil.getRotationForBlock(Armageddon.getInstance().getRouteManager().getNext()), ArmageddonConfig.lookAtBlockTime);
                 timer.start(ArmageddonConfig.lookAtBlockTime);
                 break;
             case TELEPORT:
@@ -79,19 +80,21 @@ public class Macro {
         state = State.values()[(state.ordinal() + 1) % State.values().length];
     }
 
-    public static void start() {
+    @SubscribeEvent public void onWorldRenderLast(RenderWorldLastEvent event) { RotationUtil.onRenderWorldLast(); }
+
+    public void start() {
         if(enabled) return;
         Logger.info("Starting macro.");
         enabled = true;
     }
 
-    public static void stop() {
+    public void stop() {
         if(!enabled) return;
         Logger.info("Stopping macro.");
         enabled = false;
     }
 
-    public static void toggle() {
+    public void toggle() {
         if(enabled) {
             stop();
         } else {

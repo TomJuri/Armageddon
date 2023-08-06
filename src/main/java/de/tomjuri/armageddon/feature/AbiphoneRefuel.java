@@ -1,11 +1,13 @@
 package de.tomjuri.armageddon.feature;
 
+import de.tomjuri.armageddon.Armageddon;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
 import de.tomjuri.armageddon.macro.Macro;
 import de.tomjuri.armageddon.util.*;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.Sys;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -16,13 +18,13 @@ public class AbiphoneRefuel {
 
     private static boolean shouldRefuel = false;
     private final Timer timer = new Timer();
-    private State state = State.SWITCH_TO_ABIPHONE;
+    private State state = State.OPEN_BAZAAR;
     private int maxFuel = 0;
     private int buyCounter = 0;
 
     @SubscribeEvent
     public void onClientChatReceive(ClientChatReceivedEvent event) {
-        if (!Macro.isEnabled() || event.type != 2 || shouldRefuel) return;
+        if (!Armageddon.getInstance().getMacro().isEnabled() || event.type != 2 || shouldRefuel || !ArmageddonConfig.abiphoneRefuel) return;
         try {
             String[] split = event.message.getUnformattedText().split(" {3,}");
             for (String section : split) {
@@ -53,11 +55,12 @@ public class AbiphoneRefuel {
                 int fuel0 = Math.max(1, Integer.parseInt(drillFuel[1]));
                 if (fuel0 == 1) return;
                 maxFuel = Math.max(1, Integer.parseInt(drillFuel[1]));
-                if (fuel > 100 || Macro.getState() != Macro.State.SWITCH_TO_ROD) {
+                Logger.info(fuel);
+                if (fuel > 100 || Armageddon.getInstance().getMacro().getState() != Macro.State.SWITCH_TO_ROD) {
                     return;
                 }
                 Logger.info("Drill fuel: " + fuel + "/" + maxFuel + " starting refuel.");
-                Macro.stop();
+                Armageddon.getInstance().getMacro().stop();
                 shouldRefuel = true;
             }
         } catch (Throwable ignored) {
@@ -67,7 +70,6 @@ public class AbiphoneRefuel {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (!shouldRefuel || !timer.isDone()) return;
-        Macro.stop();
         switch (state) {
             case OPEN_BAZAAR:
                 Ref.player().sendChatMessage("/bz volta");
@@ -88,13 +90,13 @@ public class AbiphoneRefuel {
                     return;
                 }
                 timer.start(500);
-                return;
+                break;
             case BUY_VOLTA:
                 if(maxFuel / 10_000 <= buyCounter) {
                     Ref.player().closeScreen();
                     break;
                 }
-                if (!InventoryUtil.click(InventoryUtil.getSlotForItem("Buy only once"), 0, 0)) {
+                if (!InventoryUtil.click(InventoryUtil.getSlotForItem("Buy only one"), 0, 0)) {
                     Logger.error("There was an issue finding the buy item!");
                     stop();
                     return;
@@ -125,6 +127,7 @@ public class AbiphoneRefuel {
                 stop();
                 return;
             case PUT_DRILL:
+                Logger.info(InventoryUtil.getSlotForItem("Volta"));
                 if(!InventoryUtil.click(53 + ArmageddonConfig.drillSlot, 0, 1)) {
                     Logger.error("Jotraeline menu did not open!");
                     stop();
@@ -159,9 +162,9 @@ public class AbiphoneRefuel {
     private void stop() {
         if(Ref.mc().currentScreen != null)
             Ref.player().closeScreen();
-        state = State.SWITCH_TO_ABIPHONE;
+        state = State.OPEN_BAZAAR;
         shouldRefuel = false;
-        Macro.start();
+        Armageddon.getInstance().getMacro().start();
     }
 
     enum State {
@@ -178,5 +181,4 @@ public class AbiphoneRefuel {
         TAKE_DRILL,
         CLOSE
     }
-
 }

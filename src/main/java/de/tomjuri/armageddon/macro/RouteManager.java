@@ -19,9 +19,8 @@ import java.util.List;
 public class RouteManager {
 
     private static List<BlockPos> route = new ArrayList<>();
-    public static int current = 0;
 
-    public static void reloadRoute() {
+    public void reloadRoute() {
         route = RouteParser.parseRoute(ArmageddonConfig.route);
         if (route.isEmpty()) {
             Logger.error("Unable to parse route!");
@@ -30,7 +29,7 @@ public class RouteManager {
         Logger.info("Route was reloaded!");
     }
 
-    public static int getStandingOn() {
+    public int getStandingOn() {
         for (BlockPos pos : route) {
             if (Ref.player().posX == pos.getX() + 0.5 && Ref.player().posZ == pos.getZ() + 0.5)
                 return route.indexOf(pos);
@@ -38,15 +37,17 @@ public class RouteManager {
         return -1;
     }
 
-    public static BlockPos getNext() {
-        int next = current + 1;
+    public BlockPos getNext() {
+        int standingOn = getStandingOn();
+        if(standingOn == -1) return null;
+        int next = standingOn + 1;
         if (next >= route.size())
             next = 0;
         return route.get(next);
     }
 
     @SubscribeEvent
-    public static void onRenderWorldLast(RenderWorldLastEvent event) {
+    public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (route.isEmpty() || !ArmageddonConfig.showWaypoints)
             return;
         for (BlockPos pos : route) {
