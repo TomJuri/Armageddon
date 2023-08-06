@@ -16,8 +16,3 @@ jobs:
         uses: gradle/gradle-build-action@v2.4.0
       - name: Run build with Gradle Wrapper
         run: ./gradlew build
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: Armageddon
-          path: build/libs/Armageddon-*.*.*.jar
