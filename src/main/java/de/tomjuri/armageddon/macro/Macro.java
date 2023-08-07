@@ -84,6 +84,10 @@ public class Macro {
 
     public void start() {
         if(enabled) return;
+        if(Armageddon.getInstance().getRouteManager().getStandingOn() == -1) {
+            Logger.error("You are not standing on a block on the route. Make sure to AOTV on it, so you are centered.");
+            return;
+        }
         Logger.info("Starting macro.");
         enabled = true;
     }

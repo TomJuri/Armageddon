@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -97,7 +96,7 @@ public class Failsafe {
         if (!(event.getPacket() instanceof S08PacketPlayerPosLook))
             return;
         S08PacketPlayerPosLook packet = (S08PacketPlayerPosLook) event.getPacket();
-        System.out.println(Armageddon.getInstance().getMacro().getState());
+        Logger.info(Armageddon.getInstance().getMacro().getState());
         if (Armageddon.getInstance().getMacro().getState() == Macro.State.MOUNT_DILLO || Armageddon.getInstance().getMacro().getState() == Macro.State.TELEPORT)
             return;
         float deltaYaw = Math.max(Math.abs(packet.getYaw()), Math.abs(Ref.player().rotationYaw)) - Math.min(Math.abs(packet.getYaw()), Math.abs(Ref.player().rotationYaw));

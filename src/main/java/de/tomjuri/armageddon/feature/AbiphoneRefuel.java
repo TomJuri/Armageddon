@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 public class AbiphoneRefuel {
 
-    private static boolean shouldRefuel = false;
+    public boolean shouldRefuel = false;
     private final Timer timer = new Timer();
     private State state = State.OPEN_BAZAAR;
     private int maxFuel = 0;
@@ -128,7 +128,7 @@ public class AbiphoneRefuel {
                 return;
             case PUT_DRILL:
                 Logger.info(InventoryUtil.getSlotForItem("Volta"));
-                if(!InventoryUtil.click(53 + ArmageddonConfig.drillSlot, 0, 1)) {
+                if(!InventoryUtil.click(80 + ArmageddonConfig.drillSlot, 0, 1)) {
                     Logger.error("Jotraeline menu did not open!");
                     stop();
                     return;
@@ -138,6 +138,14 @@ public class AbiphoneRefuel {
             case PUT_FUEL:
                 if(!InventoryUtil.click(InventoryUtil.getSlotForItem("Volta"), 0, 1)) {
                     Logger.error("Couldn't put Volta into menu!");
+                    stop();
+                    return;
+                }
+                timer.start(500);
+                break;
+            case REFUEL:
+                if(!InventoryUtil.click(22, 0, 0)) {
+                    Logger.error("Couldn't combine Volta and drill!");
                     stop();
                     return;
                 }

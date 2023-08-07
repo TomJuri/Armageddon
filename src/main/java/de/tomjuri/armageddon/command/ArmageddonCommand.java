@@ -37,4 +37,9 @@ public class ArmageddonCommand {
     private void testfailsafe() {
         Armageddon.getInstance().getFailsafe().emergency("This is a test failsafe message.", Armageddon.getInstance().getFailsafe().failsafeMovement);
     }
+
+    @SubCommand(description = "Test the refuel.")
+    private void testrefuel() {
+        Armageddon.getInstance().getAbiphoneRefuel().shouldRefuel = true;
+    }
 }
