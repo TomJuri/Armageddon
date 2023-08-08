@@ -26,8 +26,11 @@ public class Failsafe {
     private String movement = "";
     private final Timer timer = new Timer();
     private int reactionIndex = 0;
+    private boolean isFailsafe = false;
 
     public void emergency(String message, String movement) {
+        if (isFailsafe) return;
+        isFailsafe = true;
         Logger.error(message);
         new Thread(() -> {
             for (int i = 0; i < 7; i++) {
@@ -44,9 +47,9 @@ public class Failsafe {
     public void onTickReaction(TickEvent.ClientTickEvent event) {
         if (movement.isEmpty()) return;
         if (!timer.isDone()) return;
-        if(reactionIndex == 0) {
+        if (reactionIndex == 0) {
             Armageddon.getInstance().getMacro().stop();
-            Ref.player().sendChatMessage(reactionMessages.get(new Random().nextInt(reactionMessages.size())));
+            Ref.player().sendChatMessage("/gc " + reactionMessages.get(new Random().nextInt(reactionMessages.size())));
         }
         String[] split = movement.split("\\|");
         String[] split2 = split[reactionIndex].split(";");
@@ -87,22 +90,6 @@ public class Failsafe {
             reactionIndex = 0;
             movement = "";
         }
-    }
-
-    @SubscribeEvent
-    public void onReceivePacket(PacketEvent event) {
-        if (!Armageddon.getInstance().getMacro().isEnabled())
-            return;
-        if (!(event.getPacket() instanceof S08PacketPlayerPosLook))
-            return;
-        S08PacketPlayerPosLook packet = (S08PacketPlayerPosLook) event.getPacket();
-        Logger.info(Armageddon.getInstance().getMacro().getState());
-        if (Armageddon.getInstance().getMacro().getState() == Macro.State.MOUNT_DILLO || Armageddon.getInstance().getMacro().getState() == Macro.State.TELEPORT)
-            return;
-        float deltaYaw = Math.max(Math.abs(packet.getYaw()), Math.abs(Ref.player().rotationYaw)) - Math.min(Math.abs(packet.getYaw()), Math.abs(Ref.player().rotationYaw));
-        float deltaPitch = Math.max(Math.abs(packet.getPitch()), Math.abs(Ref.player().rotationPitch)) - Math.min(Math.abs(packet.getPitch()), Math.abs(Ref.player().rotationPitch));
-        if (deltaYaw > ArmageddonConfig.rotationCheckThreshold || deltaPitch > ArmageddonConfig.rotationCheckThreshold)
-            emergency("You probably have been rotation checked!", failsafeMovementNoMovement);
     }
 
     @SubscribeEvent

@@ -19,12 +19,12 @@ public class AbiphoneRefuel {
     public boolean shouldRefuel = false;
     private final Timer timer = new Timer();
     private State state = State.OPEN_BAZAAR;
+    private int fuel = 0;
     private int maxFuel = 0;
     private int buyCounter = 0;
 
     @SubscribeEvent
     public void onClientChatReceive(ClientChatReceivedEvent event) {
-        if (!Armageddon.getInstance().getMacro().isEnabled() || event.type != 2 || shouldRefuel || !ArmageddonConfig.abiphoneRefuel) return;
         try {
             String[] split = event.message.getUnformattedText().split(" {3,}");
             for (String section : split) {
@@ -51,17 +51,8 @@ public class AbiphoneRefuel {
                     matcher.reset(message);
                 }
                 String[] drillFuel = message.replaceAll("[^0-9 /]", "").trim().split("/");
-                int fuel = Math.max(0, Integer.parseInt(drillFuel[0]));
-                int fuel0 = Math.max(1, Integer.parseInt(drillFuel[1]));
-                if (fuel0 == 1) return;
+                fuel = Math.max(0, Integer.parseInt(drillFuel[0]));
                 maxFuel = Math.max(1, Integer.parseInt(drillFuel[1]));
-                Logger.info(fuel);
-                if (fuel > 100 || Armageddon.getInstance().getMacro().getState() != Macro.State.SWITCH_TO_ROD) {
-                    return;
-                }
-                Logger.info("Drill fuel: " + fuel + "/" + maxFuel + " starting refuel.");
-                Armageddon.getInstance().getMacro().stop();
-                shouldRefuel = true;
             }
         } catch (Throwable ignored) {
         }
@@ -93,6 +84,7 @@ public class AbiphoneRefuel {
                 break;
             case BUY_VOLTA:
                 if(maxFuel / 10_000 <= buyCounter) {
+                    buyCounter = 0;
                     Ref.player().closeScreen();
                     break;
                 }
@@ -162,7 +154,7 @@ public class AbiphoneRefuel {
             case CLOSE:
                 Logger.info("Successfully refueled drill!");
                 stop();
-                break;
+                return;
         }
         state = State.values()[(state.ordinal() + 1)];
     }

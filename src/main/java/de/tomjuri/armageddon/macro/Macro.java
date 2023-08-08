@@ -94,6 +94,7 @@ public class Macro {
 
     public void stop() {
         if(!enabled) return;
+        state = State.SWITCH_TO_ROD;
         Logger.info("Stopping macro.");
         enabled = false;
     }
