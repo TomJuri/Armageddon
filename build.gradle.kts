@@ -12,6 +12,7 @@ version = "1.0.0"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io")
     maven("https://repo.polyfrost.cc/releases")
     maven("https://repo.spongepowered.org/repository/maven-public")
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
@@ -29,6 +30,7 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
     modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
+    modImplementation("com.github.Macro-HQ:MacroFramework:69f5a5e713")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.json:json:20230227")
     embed("com.squareup.okhttp3:okhttp:3.14.9")
