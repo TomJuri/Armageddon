@@ -2,12 +2,10 @@ package de.tomjuri.armageddon.feature;
 
 import de.tomjuri.armageddon.Armageddon;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
-import de.tomjuri.armageddon.macro.Macro;
 import de.tomjuri.armageddon.util.*;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.Sys;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -164,7 +162,7 @@ public class AbiphoneRefuel {
             Ref.player().closeScreen();
         state = State.OPEN_BAZAAR;
         shouldRefuel = false;
-        Armageddon.getInstance().getMacro().start();
+        Armageddon.getInstance().getMacro().enable();
     }
 
     enum State {

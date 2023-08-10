@@ -20,6 +20,8 @@ repositories {
 
 val embed: Configuration by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
+val modEmbed: Configuration by configurations.creating
+configurations.modImplementation.get().extendsFrom(modEmbed)
 
 dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
@@ -30,10 +32,10 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
     modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
-    modImplementation("com.github.Macro-HQ:MacroFramework:69f5a5e713")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.json:json:20230227")
     embed("com.squareup.okhttp3:okhttp:3.14.9")
+    modEmbed("com.github.Macro-HQ:MacroFramework:1709001397")
 }
 
 blossom {

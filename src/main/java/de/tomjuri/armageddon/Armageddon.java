@@ -6,10 +6,11 @@ import de.tomjuri.armageddon.config.ArmageddonConfig;
 import de.tomjuri.armageddon.feature.AbiphoneRefuel;
 import de.tomjuri.armageddon.feature.Failsafe;
 import de.tomjuri.armageddon.gui.LicenseInvalidDisplay;
-import de.tomjuri.armageddon.macro.Macro;
+import de.tomjuri.armageddon.macro.ArmadilloMacro;
 import de.tomjuri.armageddon.macro.RouteManager;
 import de.tomjuri.armageddon.util.AuthUtil;
 import de.tomjuri.armageddon.util.Ref;
+import de.tomjuri.macroframework.MacroFramework;
 import lombok.Getter;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +34,7 @@ public class Armageddon {
     @Getter
     private Failsafe failsafe;
     @Getter
-    private Macro macro;
+    private ArmadilloMacro macro;
     @Getter
     private RouteManager routeManager;
 
@@ -71,14 +72,17 @@ public class Armageddon {
                     config = new ArmageddonConfig();
                     abiphoneRefuel = new AbiphoneRefuel();
                     failsafe = new Failsafe();
-                    macro = new Macro();
+                    macro = new ArmadilloMacro();
                     routeManager = new RouteManager();
                     CommandManager.register(new ArmageddonCommand());
                     MinecraftForge.EVENT_BUS.register(abiphoneRefuel);
                     MinecraftForge.EVENT_BUS.register(failsafe);
-                    MinecraftForge.EVENT_BUS.register(macro);
+                    MacroFramework.register(macro);
                     MinecraftForge.EVENT_BUS.register(routeManager);
                     instance = this;
+
+
+
                     return;
                 }
             }

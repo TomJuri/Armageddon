@@ -1,9 +1,7 @@
 package de.tomjuri.armageddon.mixin;
 
 import de.tomjuri.armageddon.Armageddon;
-import de.tomjuri.armageddon.feature.Failsafe;
 import de.tomjuri.armageddon.config.ArmageddonConfig;
-import de.tomjuri.armageddon.macro.Macro;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundManager;

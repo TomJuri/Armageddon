@@ -10,7 +10,6 @@ import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import de.tomjuri.armageddon.Armageddon;
-import de.tomjuri.armageddon.macro.Macro;
 
 public class ArmageddonConfig extends Config {
     @KeyBind(name = "Toggle macro")
