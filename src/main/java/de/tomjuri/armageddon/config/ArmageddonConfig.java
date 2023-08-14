@@ -31,11 +31,11 @@ public class ArmageddonConfig extends Config {
     @Switch(name = "Abiphone refuel")
     public static boolean abiphoneRefuel = true;
     @Slider(name = "Swipe range", min = 180f, max = 360f, step = 1)
-    public static int swipeRange = 320;
+    public static float swipeRange = 320;
     @Slider(name = "Swipe time", min = 300f, max = 1000f, step = 1)
-    public static int swipeTime = 500;
+    public static long swipeTime = 500;
     @Slider(name = "Look at block time", min = 150f, max = 500f, step = 1)
-    public static int lookAtBlockTime = 500;
+    public static long lookAtBlockTime = 500;
     @Slider(name = "Delay after mounting dillo", min = 100f, max = 500f, step = 50)
     public static int delayAfterMountingDillo = 200;
     @Slider(name = "Delay after teleporting", min = 100f, max = 900f, step = 50)
