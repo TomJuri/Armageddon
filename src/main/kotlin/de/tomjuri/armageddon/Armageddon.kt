@@ -3,7 +3,6 @@ package de.tomjuri.armageddon
 import cc.polyfrost.oneconfig.utils.commands.CommandManager
 import de.tomjuri.armageddon.command.ArmageddonCommand
 import de.tomjuri.armageddon.config.ArmageddonConfig
-import de.tomjuri.armageddon.feature.AbiphoneRefuel
 import de.tomjuri.armageddon.feature.Failsafe
 import de.tomjuri.armageddon.gui.LicenseInvalidDisplay
 import de.tomjuri.armageddon.macro.ArmadilloMacro
@@ -23,7 +22,6 @@ import java.security.interfaces.RSAPublicKey
 @Mod(modid = "armageddon", name = "Armageddon", version = "%%VERSION%%")
 class Armageddon {
     lateinit var config: ArmageddonConfig
-    lateinit var abiphoneRefuel: AbiphoneRefuel
     lateinit var failsafe: Failsafe
     lateinit var macro: ArmadilloMacro
     lateinit var routeManager: RouteManager
@@ -67,12 +65,10 @@ class Armageddon {
                         .equals(split[2]) && System.currentTimeMillis() - split[3].toLong() < 20000
                 ) {
                     config = ArmageddonConfig()
-                    abiphoneRefuel = AbiphoneRefuel()
                     failsafe = Failsafe()
                     macro = ArmadilloMacro()
                     routeManager = RouteManager()
                     CommandManager.register(ArmageddonCommand())
-                    MinecraftForge.EVENT_BUS.register(abiphoneRefuel)
                     MinecraftForge.EVENT_BUS.register(failsafe)
                     MacroFramework.register(macro)
                     MinecraftForge.EVENT_BUS.register(routeManager)
