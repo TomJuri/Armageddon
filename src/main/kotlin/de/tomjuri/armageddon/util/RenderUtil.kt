@@ -1,5 +1,7 @@
 package de.tomjuri.armageddon.util
 
+import de.tomjuri.macroframework.util.mc
+import de.tomjuri.macroframework.util.player
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
@@ -39,7 +41,7 @@ object RenderUtil {
     }
 
     fun drawLine(event: RenderWorldLastEvent, from: Vec3, to: Vec3, lineWidth: Float, color: Color) {
-        val render: Entity = Ref.mc().getRenderViewEntity()
+        val render: Entity = mc.renderViewEntity
         val tessellator = Tessellator.getInstance()
         val bufferBuilder = tessellator.worldRenderer
         val realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * event.partialTicks
@@ -74,17 +76,17 @@ object RenderUtil {
     }
 
     fun renderText(pos: BlockPos, text: String?) {
-        val renderPosX: Double = Ref.mc().getRenderManager().viewerPosX
-        val renderPosY: Double = Ref.mc().getRenderManager().viewerPosY
-        val renderPosZ: Double = Ref.mc().getRenderManager().viewerPosZ
+        val renderPosX: Double = mc.renderManager.viewerPosX
+        val renderPosY: Double = mc.renderManager.viewerPosY
+        val renderPosZ: Double = mc.renderManager.viewerPosZ
         val x = pos.x - renderPosX
         val y = pos.y - renderPosY
         val z = pos.z - renderPosZ
         GlStateManager.pushMatrix()
         GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5)
-        GlStateManager.rotate(-Ref.mc().getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f)
-        GlStateManager.rotate(Ref.mc().getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f)
-        val scale = 0.005 * sqrt(Ref.player().getDistanceSq(pos))
+        GlStateManager.rotate(-mc.renderManager.playerViewY, 0.0f, 1.0f, 0.0f)
+        GlStateManager.rotate(mc.renderManager.playerViewX, 1.0f, 0.0f, 0.0f)
+        val scale = 0.005 * sqrt(player.getDistanceSq(pos))
         GlStateManager.scale(-scale, -scale, scale)
         GL11.glNormal3f(0.0f, 1.0f, 0.0f)
         GlStateManager.disableLighting()
@@ -92,7 +94,7 @@ object RenderUtil {
         GlStateManager.disableDepth()
         GlStateManager.enableBlend()
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-        Ref.mc().fontRendererObj.drawString(text, 0, 0, 0xFFFFFF)
+        mc.fontRendererObj.drawString(text, 0, 0, 0xFFFFFF)
         GlStateManager.enableDepth()
         GlStateManager.depthMask(true)
         GlStateManager.enableLighting()

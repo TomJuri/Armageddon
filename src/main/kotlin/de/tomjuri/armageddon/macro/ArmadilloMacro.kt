@@ -88,8 +88,9 @@ class ArmadilloMacro : Macro(listOf(SWITCH_TO_ROD, SUMMON_DILLO, SWITCH_TO_DRILL
                 val next = Armageddon.instance.routeManager.getNext()
                 if(next == null) {
                     Logger.error("No next block found!")
+                    return@TimedState
                 }
-                RotationUtil.ease(AngleUtil.getRotationForBlock(), ArmageddonConfig.lookAtBlockTime)
+                RotationUtil.ease(AngleUtil.getRotationForBlock(next), ArmageddonConfig.lookAtBlockTime)
             },
             ArmageddonConfig.lookAtBlockTime
         )
@@ -98,7 +99,6 @@ class ArmadilloMacro : Macro(listOf(SWITCH_TO_ROD, SUMMON_DILLO, SWITCH_TO_DRILL
         private val TELEPORT = ConditionalState(
             {
                 i = Armageddon.instance.routeManager.getStandingOn() + 1
-                this.disable()
                 KeyBindUtil.rightClick()
             },
             { Armageddon.instance.routeManager.getStandingOn() != i },

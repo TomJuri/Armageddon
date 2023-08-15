@@ -1,5 +1,6 @@
 package de.tomjuri.armageddon.util
 
+import de.tomjuri.macroframework.util.player
 import net.minecraft.util.ChatComponentText
 
 object Logger {
@@ -12,6 +13,6 @@ object Logger {
     }
 
     private fun send(message: String) {
-        Ref.player().addChatMessage(ChatComponentText("§eArmageddon §8» §$message"))
+        player.addChatMessage(ChatComponentText("§eArmageddon §8» §$message"))
     }
 }

@@ -44,7 +44,7 @@ class RouteManager {
     }
 
     @SubscribeEvent
-    fun onRenderWorldLast(event: RenderWorldLastEvent?) {
+    fun onRenderWorldLast(event: RenderWorldLastEvent) {
         if (route.isEmpty() || !ArmageddonConfig.showWaypoints) return
         for (pos in route) {
             if (world.getBlockState(pos).block === Blocks.cobblestone)

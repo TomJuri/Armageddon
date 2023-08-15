@@ -34,7 +34,7 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.json:json:20230227")
     embed("com.squareup.okhttp3:okhttp:3.14.9")
-    modEmbed("com.github.Macro-HQ:MacroFramework:a0869aefc2")
+    modEmbed("com.github.Macro-HQ:MacroFramework:58af7fce47")
 }
 
 blossom {
