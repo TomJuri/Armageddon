@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinSoundManager {
     @Inject(method = "getNormalizedVolume", at = @At("RETURN"), cancellable = true)
     private void getNormalizedVolume(ISound sound, SoundPoolEntry soundPoolEntry, SoundCategory category, CallbackInfoReturnable<Float> ci) {
-        if(Armageddon.getInstance().getMacro().isEnabled() && ArmageddonConfig.muteGameSounds) {
+        if(Armageddon.instance.macro.getEnabled() && ArmageddonConfig.muteGameSounds) {
             ci.setReturnValue(0.0f);
         }
     }
