@@ -33,11 +33,15 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.json:json:20230227")
     embed("com.squareup.okhttp3:okhttp:3.14.9")
-    modEmbed("com.github.Macro-HQ:MacroFramework:58af7fce47")
+    modEmbed("com.github.Macro-HQ:MacroFramework:ba145a15b3")
 }
 
+val COMMIT = runCatching { System.getenv("GITHUB_SHA").substring(0, 7) }.getOrDefault("local")
+val BRANCH = System.getenv("GITHUB_REF_NAME") ?: "dev"
+
 blossom {
-    replaceToken("%%VERSION%%", version)
+    replaceToken("%%COMMIT%%", COMMIT)
+    replaceToken("%%BRANCH%%", BRANCH)
 }
 
 loom {
@@ -56,7 +60,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("mixins.armageddon.json")
+        mixinConfig("mixins.armageddon.json", "mixins.macroframework.json")
         mixin.defaultRefmapName = "mixins.armageddon.refmap.json"
     }
 }
@@ -88,9 +92,9 @@ tasks {
     }
 
     processResources {
-        inputs.property("version", version)
+        inputs.property("version", "$COMMIT/$BRANCH")
         filesMatching(listOf("mcmod.info")) {
-            expand(mapOf("version" to version))
+            expand(mapOf("version" to "$COMMIT/$BRANCH"))
         }
     }
 

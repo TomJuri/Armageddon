@@ -1,5 +1,6 @@
 package de.tomjuri.armageddon.macro
 
+import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.config.ArmageddonConfig
 import de.tomjuri.armageddon.util.Logger
 import de.tomjuri.armageddon.util.RenderUtil
@@ -19,7 +20,7 @@ class RouteManager {
     private var route: List<BlockPos> = ArrayList()
 
     fun reloadRoute() {
-        route = RouteParser.parseRoute(ArmageddonConfig.route)
+        route = RouteParser.parseRoute(Armageddon.instance.config.route)
         if (route.isEmpty()) {
             Logger.error("Unable to parse route!")
             return
@@ -45,7 +46,7 @@ class RouteManager {
 
     @SubscribeEvent
     fun onRenderWorldLast(event: RenderWorldLastEvent) {
-        if (route.isEmpty() || !ArmageddonConfig.showWaypoints) return
+        if (route.isEmpty() || !Armageddon.instance.config.showWaypoints) return
         for (pos in route) {
             if (world.getBlockState(pos).block === Blocks.cobblestone)
                 RenderUtil.drawBlockBox(event, pos, Color.GREEN)
@@ -53,10 +54,10 @@ class RouteManager {
                 RenderUtil.drawBlockBox(event, pos, Color.MAGENTA)
             RenderUtil.renderText(pos, route.indexOf(pos).toString())
             val next = route[min(route.size - 1, route.indexOf(pos) + 1)]
-            val hit: MovingObjectPosition = player.worldObj.rayTraceBlocks(
+            val hit = player.worldObj.rayTraceBlocks(
                 Vec3(pos.x + 0.5, pos.y + 2.54, pos.z + 0.5),
                 Vec3(next.x + 0.5, next.y + 0.5, next.z + 0.5)
-            )
+            ) ?: continue
             if (hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && hit.blockPos !== next)
                 RenderUtil.drawBlockBox(event, hit.blockPos, Color.RED)
         }

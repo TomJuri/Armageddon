@@ -21,11 +21,11 @@ class ArmageddonCommand {
 
     @SubCommand(description = "Toggles waypoints.")
     private fun waypoints() {
-        if (ArmageddonConfig.showWaypoints) {
-            ArmageddonConfig.showWaypoints = false
+        if (Armageddon.instance.config.showWaypoints) {
+            Armageddon.instance.config.showWaypoints = false
             de.tomjuri.armageddon.util.Logger.info("Waypoints are now disabled.")
         } else {
-            ArmageddonConfig.showWaypoints = true
+            Armageddon.instance.config.showWaypoints = true
             de.tomjuri.armageddon.util.Logger.info("Waypoints are now enabled.")
         }
     }

@@ -1,7 +1,6 @@
 package de.tomjuri.armageddon.feature
 
 import de.tomjuri.armageddon.Armageddon
-import de.tomjuri.armageddon.config.ArmageddonConfig
 import de.tomjuri.armageddon.util.Logger.error
 import de.tomjuri.macroframework.util.*
 import de.tomjuri.macroframework.util.Timer
@@ -29,7 +28,7 @@ class Failsafe {
         error(message!!)
         Thread {
             for (i in 0..6) {
-                SoundUtil.playSound("/assets/pipe.wav", ArmageddonConfig.failsafeVolume)
+                SoundUtil.playSound("/assets/pipe.wav", Armageddon.instance.config.failsafeVolume)
                 Thread.sleep(2600)
             }
         }.start()
@@ -43,7 +42,7 @@ class Failsafe {
         if (movement.isEmpty()) return
         if (!timer.isOver()) return
         if (reactionIndex == 0) {
-            Armageddon.instance.macro.disable()
+            Armageddon.instance.macro.stop()
             player.sendChatMessage("/gc " + reactionMessages[Random().nextInt(reactionMessages.size)])
         }
         val split = movement.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -89,23 +88,26 @@ class Failsafe {
 
     @SubscribeEvent
     fun onDisconnect(event: ClientDisconnectionFromServerEvent) {
-        if (!Armageddon.instance.macro.enabled) return
+        if (!Armageddon.instance.macro.isEnabled()) return
         emergency("You probably have been kicked from the server!", "")
     }
 
     @SubscribeEvent
     fun onUnloadWorld(event: WorldEvent.Unload) {
-        if (!Armageddon.instance.macro.enabled) return
+        if (!Armageddon.instance.macro.isEnabled()) return
         emergency("You probably have been kicked from the server!", "")
     }
 
-    fun nextBlockMissingTrigger() {
-
+    fun nextBlockMissing(): Boolean {
+        if(world.getBlockState(Armageddon.instance.routeManager.getNext()).block == Blocks.cobblestone)
+            return false
+        emergency("Next block is missing, might be a player or a staff check!", failsafeMovementNoMovement)
+        return true
     }
 
     @SubscribeEvent
     fun onTick0(event: ClientTickEvent) {
-        if (!Armageddon.instance.macro.enabled) return
+        if (!Armageddon.instance.macro.isEnabled()) return
         val loc: BlockPos = player.position
         val top: Block = world.getBlockState(loc.add(0, 2, 0)).block
         val bottom: Block = world.getBlockState(loc.add(0, -1, 0)).block
@@ -124,7 +126,7 @@ class Failsafe {
 
     @SubscribeEvent
     fun onTick1(event: ClientTickEvent?) {
-        if (!Armageddon.instance.macro.enabled) return
+        if (!Armageddon.instance.macro.isEnabled()) return
         val radius = 20
         var bedrock = 0
         var oak = false
