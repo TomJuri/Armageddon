@@ -2,10 +2,44 @@ package de.tomjuri.armageddon.util
 
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
+import net.minecraft.util.Vec3
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
 object AngleUtil {
+
+    private val teleportationPoints = listOf(
+        Vec3(0.0, 0.0, 0.0),
+        Vec3(0.0, 0.0, 0.5),
+        Vec3(0.0, 0.0, 1.0),
+        Vec3(0.0, 0.5, 0.0),
+        Vec3(0.0, 1.0, 0.0),
+        Vec3(0.0, 0.5, 1.0),
+        Vec3(0.0, 1.0, 1.0),
+        Vec3(0.0, 1.0, 0.5),
+        Vec3(0.0, 0.5, 0.5),
+
+        Vec3(0.5, 0.0, 0.0),
+        Vec3(0.5, 0.0, 0.5),
+        Vec3(0.5, 0.0, 1.0),
+        Vec3(0.5, 0.5, 0.0),
+        Vec3(0.5, 1.0, 0.0),
+        Vec3(0.5, 0.5, 1.0),
+        Vec3(0.5, 1.0, 1.0),
+        Vec3(0.5, 1.0, 0.5),
+        Vec3(0.5, 0.5, 0.5),
+
+        Vec3(1.0, 0.0, 0.0),
+        Vec3(1.0, 0.0, 0.5),
+        Vec3(1.0, 0.0, 1.0),
+        Vec3(1.0, 0.5, 0.0),
+        Vec3(1.0, 1.0, 0.0),
+        Vec3(1.0, 0.5, 1.0),
+        Vec3(1.0, 1.0, 1.0),
+        Vec3(1.0, 1.0, 0.5),
+        Vec3(1.0, 0.5, 0.5),
+    )
+
     fun getRotationForBlock(targetPos: BlockPos): RotationUtil.Rotation {
         val deltaX: Double = targetPos.x + 0.5 - player.posX
         val deltaY: Double = targetPos.y + 0.5 - player.posY - 1.62 - 0.08 + 0.5
