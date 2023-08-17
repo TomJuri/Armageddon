@@ -18,8 +18,6 @@ repositories {
 
 val embed: Configuration by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
-val modEmbed: Configuration by configurations.creating
-configurations.modImplementation.get().extendsFrom(modEmbed)
 
 dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
@@ -33,7 +31,6 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     embed("org.json:json:20230227")
     embed("com.squareup.okhttp3:okhttp:3.14.9")
-    modEmbed("com.github.Macro-HQ:MacroFramework:ba145a15b3")
 }
 
 val COMMIT = runCatching { System.getenv("GITHUB_SHA").substring(0, 7) }.getOrDefault("local")
@@ -60,7 +57,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("mixins.armageddon.json", "mixins.macroframework.json")
+        mixinConfig("mixins.armageddon.json")
         mixin.defaultRefmapName = "mixins.armageddon.refmap.json"
     }
 }

@@ -3,8 +3,10 @@ package de.tomjuri.armageddon.macro
 import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.util.AngleUtil
 import de.tomjuri.armageddon.util.Logger
-import de.tomjuri.macroframework.util.*
+import de.tomjuri.armageddon.util.RotationUtil
+import de.tomjuri.armageddon.util.*
 import net.minecraft.entity.monster.EntityZombie
+import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
@@ -21,13 +23,15 @@ class Macro {
         if (!enabled) return
         if (!timer.isOver()) return
         if (!condition() && conditionTimeout.isOver()) {
-            Logger.info("Condition timed out! State: $state Build: ${Armageddon.COMMIT}/${Armageddon.BRANCH}")
-            enabled = false
+            Logger.info("Condition timed out! State: ${state.ordinal}")
+            stop()
             return
         }
+        println(state)
+        if(!condition()) return
         when (state) {
             State.SWITCH_TO_ROD -> {
-                player.inventory.currentItem = Armageddon.instance.config.rodSlot - 1
+                player.inventory.currentItem = config.rodSlot - 1
                 timer = Timer(100)
             }
 
@@ -37,7 +41,7 @@ class Macro {
             }
 
             State.SWITCH_TO_DRILL -> {
-                player.inventory.currentItem = Armageddon.instance.config.drillSlot - 1
+                player.inventory.currentItem = config.drillSlot - 1
                 timer = Timer(100)
             }
 
@@ -60,15 +64,15 @@ class Macro {
             State.MINE -> {
                 KeyBindUtil.jump()
                 RotationUtil.easeDirection(
-                    RotationUtil.Rotation(Armageddon.instance.config.swipeRange, player.rotationPitch),
-                    Armageddon.instance.config.swipeTime.toLong(),
+                    RotationUtil.Rotation(config.swipeRange, player.rotationPitch),
+                    config.swipeTime.toLong(),
                     RotationUtil.Direction.LEFT
                 )
-                timer = Timer(Armageddon.instance.config.swipeTime.toLong())
+                timer = Timer(config.swipeTime.toLong())
             }
 
             State.SWITCH_TO_ROD_AGAIN -> {
-                player.inventory.currentItem = Armageddon.instance.config.rodSlot - 1
+                player.inventory.currentItem = config.rodSlot - 1
                 timer = Timer(100)
             }
 
@@ -78,7 +82,7 @@ class Macro {
             }
 
             State.SWITCH_TO_AOTV -> {
-                player.inventory.currentItem = Armageddon.instance.config.aotvSlot - 1
+                player.inventory.currentItem = config.aotvSlot - 1
                 condition = { player.ridingEntity == null }
                 conditionTimeout = Timer(2500)
             }
@@ -91,22 +95,22 @@ class Macro {
             }
 
             State.LOOK_AT_BLOCK -> {
-                val next = Armageddon.instance.routeManager.getNext()
+                val next = routeManager.getNext()
                 if(next != null)
-                    RotationUtil.ease(AngleUtil.getRotationForBlock(next), Armageddon.instance.config.lookAtBlockTime.toLong())
-                timer = Timer(Armageddon.instance.config.lookAtBlockTime.toLong())
+                    RotationUtil.ease(AngleUtil.getRotationForBlock(next), config.lookAtBlockTime.toLong())
+                timer = Timer(config.lookAtBlockTime.toLong())
             }
 
             State.TELEPORT -> {
-                i = Armageddon.instance.routeManager.getStandingOn() + 1
-                if(!Armageddon.instance.failsafe.nextBlockMissing())
+                i = routeManager.getStandingOn() + 1
+                if(!failsafe.nextBlockMissing())
                     KeyBindUtil.rightClick()
             }
 
             State.UNSNEAK -> {
                 KeyBindUtil.setPressed(gameSettings.keyBindSneak, false)
                 timer = Timer(100)
-                condition = { Armageddon.instance.routeManager.getStandingOn() == i }
+                condition = { routeManager.getStandingOn() == i }
                 conditionTimeout = Timer(4000)
             }
         }
@@ -115,6 +119,10 @@ class Macro {
 
     private fun start() {
         if (enabled) return
+        state = State.SWITCH_TO_ROD
+        timer = Timer(0)
+        condition = { true }
+        conditionTimeout = Timer(0)
         Logger.info("Starting macro.")
         enabled = true
     }
@@ -150,4 +158,7 @@ class Macro {
         TELEPORT,
         UNSNEAK
     }
+
+    @SubscribeEvent
+    fun onRenderWorldLast(event: RenderWorldLastEvent) = RotationUtil.onRenderWorldLast()
 }

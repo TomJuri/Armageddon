@@ -1,12 +1,7 @@
 package de.tomjuri.armageddon.macro
 
 import de.tomjuri.armageddon.Armageddon
-import de.tomjuri.armageddon.config.ArmageddonConfig
-import de.tomjuri.armageddon.util.Logger
-import de.tomjuri.armageddon.util.RenderUtil
-import de.tomjuri.armageddon.util.RouteParser
-import de.tomjuri.macroframework.util.player
-import de.tomjuri.macroframework.util.world
+import de.tomjuri.armageddon.util.*
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MovingObjectPosition
@@ -20,7 +15,7 @@ class RouteManager {
     private var route: List<BlockPos> = ArrayList()
 
     fun reloadRoute() {
-        route = RouteParser.parseRoute(Armageddon.instance.config.route)
+        route = RouteParser.parseRoute(config.route)
         if (route.isEmpty()) {
             Logger.error("Unable to parse route!")
             return
@@ -46,7 +41,7 @@ class RouteManager {
 
     @SubscribeEvent
     fun onRenderWorldLast(event: RenderWorldLastEvent) {
-        if (route.isEmpty() || !Armageddon.instance.config.showWaypoints) return
+        if (route.isEmpty() || !config.showWaypoints) return
         for (pos in route) {
             if (world.getBlockState(pos).block === Blocks.cobblestone)
                 RenderUtil.drawBlockBox(event, pos, Color.GREEN)

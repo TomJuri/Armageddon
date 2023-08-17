@@ -40,7 +40,7 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
     var muteGameSounds = false
 
     @Switch(name = "Abiphone refuel")
-    var abiphoneRefuel = true
+    var abiphoneRefuel = false
 
     @Slider(name = "Swipe range", min = 180f, max = 360f, step = 1)
     var swipeRange = 320f
@@ -51,21 +51,13 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
     @Slider(name = "Look at block time", min = 150f, max = 500f, step = 1)
     var lookAtBlockTime = 500
 
-    @Slider(name = "Delay after mounting dillo", min = 100f, max = 500f, step = 50)
-    var delayAfterMountingDillo = 200
-
-    @Slider(name = "Delay after teleporting", min = 100f, max = 900f, step = 50)
-    var delayAfterTeleporting = 250
-
-    @Slider(name = "Rotation check threshold", min = 0f, max = 8f)
-    var rotationCheckThreshold = 2f
-
     @Slider(name = "Failsafe Volume", min = 0f, max = 100f, step = 5)
     var failsafeVolume = 100f.toInt()
 
     init {
         initialize()
-        registerKeyBind(toggleMacro) { Armageddon.instance.macro.toggle() }
+        registerKeyBind(toggleMacro) { macro.toggle() }
+        addDependency("abiphoneRefuel", false)
     }
 
 }
