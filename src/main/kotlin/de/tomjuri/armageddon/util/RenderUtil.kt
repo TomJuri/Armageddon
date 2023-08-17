@@ -1,7 +1,5 @@
 package de.tomjuri.armageddon.util
 
-import de.tomjuri.armageddon.util.mc
-import de.tomjuri.armageddon.util.player
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats

@@ -1,6 +1,5 @@
 package de.tomjuri.armageddon.util
 
-import de.tomjuri.armageddon.util.player
 import net.minecraft.util.ChatComponentText
 
 object Logger {

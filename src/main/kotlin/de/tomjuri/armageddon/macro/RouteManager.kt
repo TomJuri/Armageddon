@@ -1,6 +1,5 @@
 package de.tomjuri.armageddon.macro
 
-import de.tomjuri.armageddon.Armageddon
 import de.tomjuri.armageddon.util.*
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos

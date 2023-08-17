@@ -1,7 +1,5 @@
 package de.tomjuri.armageddon.util
 
-import de.tomjuri.armageddon.util.RotationUtil
-import de.tomjuri.armageddon.util.player
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
 import kotlin.math.atan2

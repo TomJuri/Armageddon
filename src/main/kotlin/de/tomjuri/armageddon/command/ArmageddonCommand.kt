@@ -3,8 +3,6 @@ package de.tomjuri.armageddon.command
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand
-import de.tomjuri.armageddon.Armageddon
-import de.tomjuri.armageddon.config.ArmageddonConfig
 import de.tomjuri.armageddon.util.config
 import de.tomjuri.armageddon.util.failsafe
 import de.tomjuri.armageddon.util.routeManager

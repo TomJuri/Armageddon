@@ -1,9 +1,5 @@
 package de.tomjuri.armageddon.macro
 
-import de.tomjuri.armageddon.Armageddon
-import de.tomjuri.armageddon.util.AngleUtil
-import de.tomjuri.armageddon.util.Logger
-import de.tomjuri.armageddon.util.RotationUtil
 import de.tomjuri.armageddon.util.*
 import net.minecraft.entity.monster.EntityZombie
 import net.minecraftforge.client.event.RenderWorldLastEvent
@@ -103,8 +99,9 @@ class Macro {
 
             State.TELEPORT -> {
                 i = routeManager.getStandingOn() + 1
-                if(!failsafe.nextBlockMissing())
-                    KeyBindUtil.rightClick()
+                if(routeManager.getNext() != null)
+                    if(!failsafe.nextBlockMissing())
+                        KeyBindUtil.rightClick()
             }
 
             State.UNSNEAK -> {

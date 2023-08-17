@@ -1,7 +1,5 @@
 package de.tomjuri.armageddon.feature
 
-import de.tomjuri.armageddon.Armageddon
-import de.tomjuri.armageddon.util.Logger
 import de.tomjuri.armageddon.util.*
 import de.tomjuri.armageddon.util.Timer
 import net.minecraft.block.Block
