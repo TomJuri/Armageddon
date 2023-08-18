@@ -19,3 +19,5 @@ val failsafe
     get() = Armageddon.instance.failsafe
 val config
     get() = Armageddon.instance.config
+val tracker
+    get() = Armageddon.instance.tracker

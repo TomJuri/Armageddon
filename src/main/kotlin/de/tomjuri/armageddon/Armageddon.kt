@@ -4,14 +4,23 @@ import cc.polyfrost.oneconfig.utils.commands.CommandManager
 import de.tomjuri.armageddon.command.ArmageddonCommand
 import de.tomjuri.armageddon.config.ArmageddonConfig
 import de.tomjuri.armageddon.feature.Failsafe
+import de.tomjuri.armageddon.feature.ProfitTracker
+import de.tomjuri.armageddon.feature.Webhook
 import de.tomjuri.armageddon.macro.Macro
 import de.tomjuri.armageddon.macro.RouteManager
 import de.tomjuri.armageddon.util.AngleUtil
+import de.tomjuri.armageddon.util.Logger
+import de.tomjuri.armageddon.util.WebhookUtil
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 
-@Mod(modid = "armageddon", name = "Armageddon", version = "${Armageddon.COMMIT}/${Armageddon.BRANCH}", acceptedMinecraftVersions = "[1.8.9]")
+@Mod(
+    modid = "armageddon",
+    name = "Armageddon",
+    version = "${Armageddon.COMMIT}/${Armageddon.BRANCH}",
+    acceptedMinecraftVersions = "[1.8.9]"
+)
 class Armageddon {
 
     companion object {
@@ -25,16 +34,20 @@ class Armageddon {
     lateinit var failsafe: Failsafe
     lateinit var macro: Macro
     lateinit var routeManager: RouteManager
+    lateinit var tracker: ProfitTracker
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
+        //    WebhookUtil.updateWebhook("https://discord.com/api/webhooks/1142135604516229120/gtQlxNajUh5AAWnSCQmy7uf85B0Pjg6FUtNHgNO56lx0rGgHEl3HVqdnb-kxTlmbdbt3","1142139713092861992",
         config = ArmageddonConfig()
         failsafe = Failsafe()
+        tracker = ProfitTracker()
         routeManager = RouteManager()
         macro = Macro()
         CommandManager.register(ArmageddonCommand())
         MinecraftForge.EVENT_BUS.register(failsafe)
         MinecraftForge.EVENT_BUS.register(macro)
         MinecraftForge.EVENT_BUS.register(routeManager)
+        MinecraftForge.EVENT_BUS.register(Webhook())
     }
 }

@@ -83,10 +83,9 @@ tasks {
     }
 
     shadowJar {
-        relocate("org.json", "de.tomjuri.armageddon.relocate.org.json")
-        relocate("okhttp3", "de.tomjuri.armageddon.relocate.okhttp3")
-        relocate("okio", "de.tomjuri.armageddon.relocate.okio")
-        relocate("kotlin", "de.tomjuri.armageddon.relocate.kotlin")
+        isEnableRelocation = true
+        relocationPrefix = "de.tomjuri.armageddon.relocate"
+        relocate("cc.polyfrost", "cc.polyfrost")
         configurations = listOf(embed)
     }
 

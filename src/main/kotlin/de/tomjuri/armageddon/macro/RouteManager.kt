@@ -30,10 +30,17 @@ class RouteManager {
         return -1
     }
 
-    fun getCurrent(): BlockPos? {
-        val standingOn = getStandingOn()
-        if (standingOn == -1) return null
-        return route[standingOn]
+    fun getClosest(): BlockPos {
+        var closest = BlockPos(0, 0, 0)
+        var distance = Double.MAX_VALUE
+        for (pos in route) {
+            val d = player.getDistanceSq(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5)
+            if (d < distance) {
+                distance = d
+                closest = pos
+            }
+        }
+        return closest
     }
 
     fun getNext(): BlockPos? {
