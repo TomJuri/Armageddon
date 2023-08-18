@@ -30,6 +30,12 @@ class RouteManager {
         return -1
     }
 
+    fun getCurrent(): BlockPos? {
+        val standingOn = getStandingOn()
+        if (standingOn == -1) return null
+        return route[standingOn]
+    }
+
     fun getNext(): BlockPos? {
         val standingOn = getStandingOn()
         if (standingOn == -1) return null
@@ -52,7 +58,7 @@ class RouteManager {
                 Vec3(pos.x + 0.5, pos.y + 2.54, pos.z + 0.5),
                 Vec3(next.x + 0.5, next.y + 0.5, next.z + 0.5)
             ) ?: continue
-            if (hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && hit.blockPos !== next)
+            if (hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && hit.blockPos != next)
                 RenderUtil.drawBlockBox(event, hit.blockPos, Color.RED)
         }
     }

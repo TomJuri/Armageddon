@@ -92,8 +92,8 @@ class Macro {
 
             State.LOOK_AT_BLOCK -> {
                 val next = routeManager.getNext()
-                if(next != null)
-                    RotationUtil.ease(AngleUtil.getRotationForBlock(next), config.lookAtBlockTime.toLong())
+                if(next != null && AngleUtil.getRotationForBlock(next) != null)
+                    RotationUtil.ease(AngleUtil.getRotationForBlock(next)!!, config.lookAtBlockTime.toLong())
                 timer = Timer(config.lookAtBlockTime.toLong())
             }
 

@@ -9,7 +9,6 @@
   "verbose": true,
   "mixins": [
     "MixinFMLHandshakeMessage",
-    "MixinNetworkManager",
     "MinecraftInvoker",
     "MixinSoundManager"
   ]
