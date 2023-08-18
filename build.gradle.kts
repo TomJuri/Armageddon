@@ -58,7 +58,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("mixins.armageddon.json")
+        mixinConfig("mixins.armadgeddon.json")
         mixin.defaultRefmapName = "mixins.armageddon.refmap.json"
     }
 }
@@ -71,7 +71,7 @@ tasks {
                         "TweakOrder" to "0",
                         "ForceLoadAsMod" to true,
                         "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker",
-                        "MixinConfigs" to "mixins.armageddon.json"
+                        "MixinConfigs" to "mixins.armadgeddon.json"
                 )
         )
         dependsOn(shadowJar)

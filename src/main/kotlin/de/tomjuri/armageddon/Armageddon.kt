@@ -38,7 +38,6 @@ class Armageddon {
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
-        //    WebhookUtil.updateWebhook("https://discord.com/api/webhooks/1142135604516229120/gtQlxNajUh5AAWnSCQmy7uf85B0Pjg6FUtNHgNO56lx0rGgHEl3HVqdnb-kxTlmbdbt3","1142139713092861992",
         config = ArmageddonConfig()
         failsafe = Failsafe()
         tracker = ProfitTracker()

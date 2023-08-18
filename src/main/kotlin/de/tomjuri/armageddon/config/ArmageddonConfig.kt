@@ -16,10 +16,10 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
     @KeyBind(name = "Toggle macro")
     var toggleMacro = OneKeyBind(UKeyboard.KEY_C)
 
-    @Text(name = "Route", secure = false, multiline = false)
+    @Text(name = "Route", secure = false, multiline = false, size = 6)
     var route = ""
 
-    @Text(name = "Webhook URL", secure = true, multiline = false)
+    @Text(name = "Webhook URL", secure = true, multiline = false, size = 5)
     var webhookUrl = ""
 
     @Slider(name = "Drill slot", min = 1f, max = 8f, step = 1)
