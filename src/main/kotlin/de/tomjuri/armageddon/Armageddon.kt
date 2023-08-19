@@ -39,6 +39,9 @@ class Armageddon {
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
         config = ArmageddonConfig()
+        Logger.sendWebhook("Thisd is a test", true, "asffffffffffffffffffff", 4718336)
+        Logger.sendWebhook("Thisd is a test", true, "asffffffffffffffffffff", 4718336)
+        Logger.sendWebhook("Thisd is a test", true, "asffffffffffffffffffff", 4718336)
         failsafe = Failsafe()
         tracker = ProfitTracker()
         routeManager = RouteManager()

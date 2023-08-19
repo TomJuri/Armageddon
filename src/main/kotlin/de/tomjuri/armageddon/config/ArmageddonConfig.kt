@@ -34,7 +34,6 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
     @Slider(name = "Abiphone slot", min = 1f, max = 8f, step = 1)
     var abiphoneSlot = 4
 
-    @JvmField
     @Switch(name = "Show waypoints")
     var showWaypoints = true
 
@@ -60,7 +59,6 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
     init {
         initialize()
         registerKeyBind(toggleMacro) { macro.toggle() }
-        addDependency("abiphoneRefuel", false)
     }
 
 }
