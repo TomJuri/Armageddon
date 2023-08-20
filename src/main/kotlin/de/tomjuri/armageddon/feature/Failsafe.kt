@@ -24,6 +24,7 @@ class Failsafe {
         if (isFailsafe) return
         isFailsafe = true
         Logger.error(message)
+        Logger.sendWebhook("A failsafe has been triggered for ${mc.session.username}", true, message, "16711680")
         Thread {
             for (i in 0..6) {
                 SoundUtil.playSound("/assets/pipe.wav", config.failsafeVolume)

@@ -15,7 +15,7 @@ object Logger {
         player.addChatMessage(ChatComponentText("§eArmageddon §8» §$message"))
     }
 
-    fun sendWebhook(title: String, ping: Boolean, embedMessage: String, color: Int) {
+    fun sendWebhook(title: String, ping: Boolean, embedMessage: String, color: String) {
         Thread {
             val s = "{\n" +
                     "  \"content\": %PING%,\n" +
@@ -37,9 +37,10 @@ object Logger {
                 .replace("%PING%", if (ping) "\"@everyone\"" else "null")
                 .replace("%TITLE%", title)
                 .replace("%EMBED_MESSAGE%", embedMessage)
-                .replace("%COLOR%", color.toString())
+                .replace("%COLOR%", color)
                 .replace("%PLAYER_HEAD%", "https://mc-heads.net/head/${mc.session.playerID}.png")
-            WebhookUtil.send(config.webhookUrl, content)
+            println(s)
+            println(WebhookUtil.send(config.webhookUrl, content))
         }.start()
     }
 }

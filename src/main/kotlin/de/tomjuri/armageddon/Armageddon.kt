@@ -4,13 +4,10 @@ import cc.polyfrost.oneconfig.utils.commands.CommandManager
 import de.tomjuri.armageddon.command.ArmageddonCommand
 import de.tomjuri.armageddon.config.ArmageddonConfig
 import de.tomjuri.armageddon.feature.Failsafe
-import de.tomjuri.armageddon.feature.ProfitTracker
+import de.tomjuri.armageddon.feature.Tracker
 import de.tomjuri.armageddon.feature.Webhook
 import de.tomjuri.armageddon.macro.Macro
 import de.tomjuri.armageddon.macro.RouteManager
-import de.tomjuri.armageddon.util.AngleUtil
-import de.tomjuri.armageddon.util.Logger
-import de.tomjuri.armageddon.util.WebhookUtil
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
@@ -34,16 +31,13 @@ class Armageddon {
     lateinit var failsafe: Failsafe
     lateinit var macro: Macro
     lateinit var routeManager: RouteManager
-    lateinit var tracker: ProfitTracker
+    lateinit var tracker: Tracker
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
         config = ArmageddonConfig()
-        Logger.sendWebhook("Thisd is a test", true, "asffffffffffffffffffff", 4718336)
-        Logger.sendWebhook("Thisd is a test", true, "asffffffffffffffffffff", 4718336)
-        Logger.sendWebhook("Thisd is a test", true, "asffffffffffffffffffff", 4718336)
         failsafe = Failsafe()
-        tracker = ProfitTracker()
+        tracker = Tracker()
         routeManager = RouteManager()
         macro = Macro()
         CommandManager.register(ArmageddonCommand())

@@ -5,7 +5,6 @@ import net.minecraft.client.settings.KeyBinding
 
 object KeyBindUtil {
     fun leftClick() = (mc as MinecraftInvoker).invokeClickMouse()
-    fun middleClick() = (mc as MinecraftInvoker).invokeMiddleClickMouse()
     fun rightClick() = (mc as MinecraftInvoker).invokeRightClickMouse()
     fun jump() = Thread {
         setPressed(gameSettings.keyBindJump, true)
