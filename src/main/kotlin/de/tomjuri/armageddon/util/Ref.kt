@@ -11,6 +11,8 @@ val world
     get() = mc.theWorld
 val gameSettings
     get() = mc.gameSettings
+val armageddon
+    get() = Armageddon.instance
 val macro
     get() = Armageddon.instance.macro
 val routeManager

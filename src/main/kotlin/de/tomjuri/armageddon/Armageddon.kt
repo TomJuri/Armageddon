@@ -44,6 +44,12 @@ class Armageddon {
         MinecraftForge.EVENT_BUS.register(failsafe)
         MinecraftForge.EVENT_BUS.register(macro)
         MinecraftForge.EVENT_BUS.register(routeManager)
+        MinecraftForge.EVENT_BUS.register(tracker)
         MinecraftForge.EVENT_BUS.register(Webhook())
+    }
+
+    // needed for hud /shrug
+    fun isTrackerInitialized(): Boolean {
+        return this::tracker.isInitialized
     }
 }

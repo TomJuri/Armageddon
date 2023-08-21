@@ -58,7 +58,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("mixins.armadgeddon.json")
+        mixinConfig("mixins.armageddon.json")
         mixin.defaultRefmapName = "mixins.armageddon.refmap.json"
     }
 }

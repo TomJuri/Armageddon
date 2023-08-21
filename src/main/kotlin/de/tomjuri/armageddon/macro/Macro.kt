@@ -23,7 +23,6 @@ class Macro {
             stop()
             return
         }
-        println(state)
         if(!condition()) return
         when (state) {
             State.SWITCH_TO_ROD -> {
@@ -121,6 +120,7 @@ class Macro {
         condition = { true }
         conditionTimeout = Timer(0)
         Logger.info("Starting macro.")
+        tracker.macroStartTime = System.currentTimeMillis()
         enabled = true
     }
 

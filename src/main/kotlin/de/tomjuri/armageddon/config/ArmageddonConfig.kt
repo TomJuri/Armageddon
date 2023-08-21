@@ -1,6 +1,7 @@
 package de.tomjuri.armageddon.config
 
 import cc.polyfrost.oneconfig.config.Config
+import cc.polyfrost.oneconfig.config.annotations.HUD
 import cc.polyfrost.oneconfig.config.annotations.KeyBind
 import cc.polyfrost.oneconfig.config.annotations.Slider
 import cc.polyfrost.oneconfig.config.annotations.Switch
@@ -55,6 +56,9 @@ class ArmageddonConfig : Config(Mod("armageddon", ModType.UTIL_QOL), "armageddon
 
     @Slider(name = "Failsafe Volume", min = 0f, max = 100f, step = 5)
     var failsafeVolume = 100f.toInt()
+
+    @HUD(name = "Profit HUD")
+    val profitHud = ProfitHud()
 
     init {
         initialize()

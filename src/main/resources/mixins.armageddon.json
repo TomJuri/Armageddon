@@ -8,8 +8,9 @@
   },
   "verbose": true,
   "mixins": [
-    "MixinFMLHandshakeMessage",
     "MinecraftInvoker",
+    "MixinFMLHandshakeMessage",
+    "MixinInventoryPlayer",
     "MixinSoundManager"
   ]
 }
