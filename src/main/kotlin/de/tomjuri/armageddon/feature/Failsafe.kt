@@ -104,6 +104,7 @@ class Failsafe {
     }
 
     fun nextBlockMissing(): Boolean {
+        println(world.getBlockState(routeManager.getNext()).block)
         if(world.getBlockState(routeManager.getNext()).block == Blocks.cobblestone)
             return false
         emergency("Next block is missing, might be a player or a staff check!", failsafeMovementNoMovement)

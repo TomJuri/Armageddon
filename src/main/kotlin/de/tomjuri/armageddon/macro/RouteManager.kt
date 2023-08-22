@@ -11,7 +11,7 @@ import java.awt.Color
 import kotlin.math.min
 
 class RouteManager {
-    private var route: List<BlockPos> = ArrayList()
+    private var route: MutableList<BlockPos> = mutableListOf()
 
     fun reloadRoute() {
         route = RouteParser.parseRoute(config.route)
@@ -49,6 +49,12 @@ class RouteManager {
         var next = standingOn + 1
         if (next >= route.size) next = 0
         return route[next]
+    }
+
+    fun setWaypoint(id: Int) : Boolean {
+        route.getOrNull(id) ?: return false
+        route[id] = BlockPos(player.posX, player.posY, player.posZ)
+        return true
     }
 
     @SubscribeEvent

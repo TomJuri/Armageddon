@@ -4,7 +4,7 @@ import net.minecraft.util.BlockPos
 import org.json.JSONArray
 
 object RouteParser {
-    fun parseRoute(route: String?): List<BlockPos> {
+    fun parseRoute(route: String?): MutableList<BlockPos> {
         return try {
             val json = JSONArray(route)
             val waypoints: MutableList<BlockPos> = ArrayList()
